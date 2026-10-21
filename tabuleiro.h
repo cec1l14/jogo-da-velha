@@ -4,6 +4,7 @@
 #define VAZIO 0
 #define O 1
 #define X 4
+#define EMPATE 2
 
 typedef struct{
     int M[3][3];
