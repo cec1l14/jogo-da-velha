@@ -26,7 +26,7 @@ void joga(JogadorTeclado *jogador, Tabuleiro *tab) {
             marcaJogada(tab, linha, coluna, (*jogador).tipo);
             jogadaValida = 1;
         } else {
-            printf("Jogada invalida! A jogada desejada está em uma posição fora do tabuleiro ou ocupada.\n");
+            printf("Jogada invalida! A jogada desejada esta em uma posicao fora do tabuleiro ou ocupada.\n");
         }
     }
  }
