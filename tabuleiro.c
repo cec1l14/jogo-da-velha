@@ -88,9 +88,16 @@ int temVencedor(Tabuleiro *tab){
         return X;
     }
 
+    for(i=0; i<3; i++){
+        for(j=0; j<3; j++){
+            if((*tab).M[i][j] == VAZIO){
+                return 0;
+            }
+        }
+    }
     return EMPATE;
-    
 }
+
 void marcaJogada(Tabuleiro *tab, int x, int y, int tipo){
     (*tab).M[x][y] = tipo;
 }

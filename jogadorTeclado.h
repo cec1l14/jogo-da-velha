@@ -1,7 +1,11 @@
 #ifndef JOGADORTECLADO_H
 #define JOGADORTECLADO_H
+#include "tabuleiro.h"
 
-int tipo;
-void joga(Tabuleiro *tab);
+typedef struct{
+    int tipo;
+} JogadorTeclado;
+
+void joga(JogadorTeclado *jogador, Tabuleiro *tab);
 
 #endif

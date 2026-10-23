@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include "jogadorTeclado.h"
 
-int tipo;
-
-
-void joga(Tabuleiro *tab) {
+void joga(JogadorTeclado *jogador, Tabuleiro *tab) {
     char letra;
-    if (tipo == 4) {
+    if ((*jogador).tipo == X) {
         letra = 'X';
     } else {
         letra = 'O';
@@ -26,10 +23,10 @@ void joga(Tabuleiro *tab) {
         
         
         if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tab->M[linha][coluna] == 0) {
-            marcaJogada(tab, linha, coluna, tipo);
+            marcaJogada(tab, linha, coluna, (*jogador).tipo);
             jogadaValida = 1;
         } else {
-            printf("Jogada inválida! A jogada desejada está em uma posição fora do tabuleiro ou ocupada.\n");
+            printf("Jogada invalida! A jogada desejada está em uma posição fora do tabuleiro ou ocupada.\n");
         }
     }
  }
