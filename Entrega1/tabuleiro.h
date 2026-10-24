@@ -14,5 +14,6 @@ void inicializaTabuleiro(Tabuleiro *tab);
 void desenha(Tabuleiro *tab);
 int temVencedor(Tabuleiro *tab);
 void marcaJogada(Tabuleiro *tab, int x, int y, int tipo);
+char conversao(int valor);
 
 #endif

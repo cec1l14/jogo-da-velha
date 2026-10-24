@@ -22,7 +22,7 @@ void joga(JogadorTeclado *jogador, Tabuleiro *tab) {
         scanf("%d", &coluna);
         
         
-        if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tab->M[linha][coluna] == 0) {
+        if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tab->M[linha][coluna] == VAZIO) {
             marcaJogada(tab, linha, coluna, (*jogador).tipo);
             jogadaValida = 1;
         } else {

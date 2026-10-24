@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include "tabuleiro.h"
 
-void inicializaTabuleiro(Tabuleiro *tab){
-
-    int M[3][3];
+void inicializaTabuleiro(Tabuleiro *tab){    
     int i, j;
 
     for(i=0; i<3; i++){
@@ -13,7 +11,7 @@ void inicializaTabuleiro(Tabuleiro *tab){
     }
 }
 
-static char conversao(int valor){
+char conversao(int valor){
     if(valor == X){
         return 'X';
     }
