@@ -9,7 +9,15 @@ Em suma, o projeto está dividido em três implementações básicas:
 
 ### Módulo Jogo de Tabuleiro
 
-ado a-a-do cada um no seu quadrado
+Jogo da velha para **dois jogadores humanos**, jogando pelo teclado na mesma máquina. O jogo termina quando um dos jogadores alinha três símbolos (em linha, coluna ou diagonal) ou quando o tabuleiro enche sem vencedor, resultando em empate.
+
+**Representação do tabuleiro:** cada casa guarda um inteiro: `0` (vazia), `1` (`O`) ou `4` (`X`). Somando as casas de uma linha, coluna ou diagonal, o resultado `3` indica vitória de `O` e `12` indica vitória de `X`.
+
+**Como compilar**
+
+```bash
+gcc *.c -o jogo.exe
+```
 
 ## Integrantes
 
