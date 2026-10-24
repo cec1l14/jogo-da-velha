@@ -21,11 +21,12 @@ char conversao(int valor){
     else{
         return ' ';
     }
-}
+} 
 
 void desenha(Tabuleiro *tab){
     int i,j;
-    printf("\033[2J\033[H");
+
+    printf("\033[2J\033[H"); // limpeza da tela e reposicionamento do cursor no canto superior esquerdo (documento da atividade)
 
     for(i=0; i<3; i++){
         for(j=0; j<3; j++){
