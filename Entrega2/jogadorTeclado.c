@@ -1,15 +1,9 @@
 #include <stdio.h>
 #include "jogadorTeclado.h"
 
-void joga(JogadorTeclado *jogador, Tabuleiro *tab) {
-    char letra;
-    if ((*jogador).tipo == X) {
-        letra = 'X';
-    } else {
-        letra = 'O';
-    }
-
-    printf("\n Turno do Jogador %c. \n", letra);
+void joga(JogadorTeclado *jogador, Tabuleiro *tab){
+    
+    printf("\n Turno do Jogador %c. \n", conversao((*jogador).tipo));
     
     int linha, coluna;
     int jogadaValida = 0; 
@@ -22,7 +16,7 @@ void joga(JogadorTeclado *jogador, Tabuleiro *tab) {
         scanf("%d", &coluna);
         
         
-        if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tab->M[linha][coluna] == 0) {
+        if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && (*tab).M[linha][coluna] == VAZIO) {
             marcaJogada(tab, linha, coluna, (*jogador).tipo);
             jogadaValida = 1;
         } else {

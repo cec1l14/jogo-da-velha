@@ -2,15 +2,8 @@
 #include "jogadorTeclado.h"
 
 void joga(JogadorTeclado *jogador, Tabuleiro *tab){
-    char letra;
-
-    if ((*jogador).tipo == X) {
-        letra = 'X';
-    } else {
-        letra = 'O';
-    }
-
-    printf("\n Turno do Jogador %c. \n", letra);
+    
+    printf("\n Turno do Jogador %c. \n", conversao((*jogador).tipo));
     
     int linha, coluna;
     int jogadaValida = 0; 
