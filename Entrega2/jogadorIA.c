@@ -11,6 +11,148 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
     } else {
         jogadorHumano = 1;
     }
+
+    // R1. Se você ou seu oponente tiver duas marcações em sequência, marque o quadrado restante.
+
+    int i;
+
+    for (i = 0; i < 3; i++) {
+
+        // parte IA
+        // verificao das linhas 
+
+        if ((*tab).M[i][0] == (*jogadoria).tipo && (*tab).M[i][1] == (*jogadoria).tipo && (*tab).M[i][2] == VAZIO) {
+            marcaJogada(tab, i, 2, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[i][1] == (*jogadoria).tipo && (*tab).M[i][2] == (*jogadoria).tipo && (*tab).M[i][0] == VAZIO) {
+            marcaJogada(tab, i, 0, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[i][0] == (*jogadoria).tipo && (*tab).M[i][2] == (*jogadoria).tipo && (*tab).M[i][1] == VAZIO) {
+            marcaJogada(tab, i, 1, jogadoria->tipo);
+            return;
+        }
+
+        // verificacao das colunas
+
+        if ((*tab).M[0][i] == (*jogadoria).tipo && (*tab).M[1][i] == (*jogadoria).tipo && (*tab).M[2][i] == VAZIO) {
+            marcaJogada(tab, 2, i, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[1][i] == (*jogadoria).tipo && (*tab).M[2][i] == (*jogadoria).tipo && (*tab).M[0][i] == VAZIO) {
+            marcaJogada(tab, 0, i, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[0][i] == (*jogadoria).tipo && (*tab).M[2][i] == (*jogadoria).tipo && (*tab).M[1][i] == VAZIO) {
+            marcaJogada(tab, 1, i, jogadoria->tipo);
+            return;
+        }
+    }
+
+    // verificacao da diagonal principal
+
+    if ((*tab).M[0][0] == (*jogadoria).tipo && (*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][2] == VAZIO) {
+        marcaJogada(tab, 2, 2, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][2] == (*jogadoria).tipo && (*tab).M[0][0] == VAZIO) {
+        marcaJogada(tab, 0, 0, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[0][0] == (*jogadoria).tipo && (*tab).M[2][2] == (*jogadoria).tipo && (*tab).M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadoria->tipo);
+        return;
+    }
+
+    // verificacao da diagonal secundaria
+
+    if ((*tab).M[0][2] == (*jogadoria).tipo && (*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][0] == VAZIO) {
+        marcaJogada(tab, 2, 0, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][0] == (*jogadoria).tipo && (*tab).M[0][2] == VAZIO) {
+        marcaJogada(tab, 0, 2, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[0][2] == (*jogadoria).tipo && (*tab).M[2][0] == (*jogadoria).tipo && (*tab).M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadoria->tipo);
+        return;
+    }
+
+    for (i = 0; i < 3; i++) {
+
+        // parte humano
+        // verificacao das linhas
+
+        if ((*tab).M[i][0] == jogadorHumano && (*tab).M[i][1] == jogadorHumano && (*tab).M[i][2] == VAZIO) {
+            marcaJogada(tab, i, 2, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[i][1] == jogadorHumano && (*tab).M[i][2] == jogadorHumano && (*tab).M[i][0] == VAZIO) {
+            marcaJogada(tab, i, 0, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[i][0] == jogadorHumano && (*tab).M[i][2] == jogadorHumano && (*tab).M[i][1] == VAZIO) {
+            marcaJogada(tab, i, 1, jogadoria->tipo);
+            return;
+        }
+
+        // verificacao das colunas
+
+        if ((*tab).M[0][i] == jogadorHumano && (*tab).M[1][i] == jogadorHumano && (*tab).M[2][i] == VAZIO) {
+            marcaJogada(tab, 2, i, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[1][i] == jogadorHumano && (*tab).M[2][i] == jogadorHumano && (*tab).M[0][i] == VAZIO) {
+            marcaJogada(tab, 0, i, jogadoria->tipo);
+            return;
+        }
+        if ((*tab).M[0][i] == jogadorHumano && (*tab).M[2][i] == jogadorHumano && (*tab).M[1][i] == VAZIO) {
+            marcaJogada(tab, 1, i, jogadoria->tipo);
+            return;
+        }
+    }
+
+    // verificacao da diagonal principal
+
+    if ((*tab).M[0][0] == jogadorHumano && (*tab).M[1][1] == jogadorHumano && (*tab).M[2][2] == VAZIO) {
+        marcaJogada(tab, 2, 2, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[1][1] == jogadorHumano && (*tab).M[2][2] == jogadorHumano && (*tab).M[0][0] == VAZIO) {
+        marcaJogada(tab, 0, 0, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[0][0] == jogadorHumano && (*tab).M[2][2] == jogadorHumano && (*tab).M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadoria->tipo);
+        return;
+    }
+
+
+    // verificacao da diagonal secundaria
+
+    if ((*tab).M[0][2] == jogadorHumano && (*tab).M[1][1] == jogadorHumano && (*tab).M[2][0] == VAZIO) {
+        marcaJogada(tab, 2, 0, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[1][1] == jogadorHumano && (*tab).M[2][0] == jogadorHumano && (*tab).M[0][2] == VAZIO) {
+        marcaJogada(tab, 0, 2, jogadoria->tipo);
+        return;
+    }
+    if ((*tab).M[0][2] == jogadorHumano && (*tab).M[2][0] == jogadorHumano && (*tab).M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadoria->tipo);
+        return;
+    }
+    // R2. Se houver uma jogada que crie duas sequências de duas marcações, use-a. 
+
+    // R3. Se o quadrado central estiver livre, marque-o.
+
+    if((*tab).M[1][1] == VAZIO){
+        marcaJogada(tab, 1, 1, jogadoria->tipo);
+        return;
+    }
+    
     // R4: Se seu oponente tiver marcado um dos cantos, marque o canto oposto
     int cantos_linha, cantos_coluna, opostos_linha, opostos_coluna;
 
