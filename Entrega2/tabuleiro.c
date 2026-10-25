@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include "tabuleiro.h"
 
-void inicializaTabuleiro(Tabuleiro *tab){
-
-    int M[3][3];
+void inicializaTabuleiro(Tabuleiro *tab){    
     int i, j;
 
     for(i=0; i<3; i++){
@@ -13,7 +11,7 @@ void inicializaTabuleiro(Tabuleiro *tab){
     }
 }
 
-static char conversao(int valor){
+char conversao(int valor){
     if(valor == X){
         return 'X';
     }
@@ -23,11 +21,12 @@ static char conversao(int valor){
     else{
         return ' ';
     }
-}
+} 
 
 void desenha(Tabuleiro *tab){
     int i,j;
-    printf("\033[2J\033[H");
+
+    printf("\033[2J\033[H"); // limpeza da tela e reposicionamento do cursor no canto superior esquerdo (documento da atividade)
 
     for(i=0; i<3; i++){
         for(j=0; j<3; j++){

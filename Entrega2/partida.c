@@ -1,31 +1,29 @@
 #include <stdio.h>
 #include "partida.h"
 
-void configuraJogadores(JogadorTeclado *jogador1, JogadorTeclado *jogador2){
+void configuraJogadores(JogadorTeclado *humano, JogadorIA *ia){
     int tipo1, tipo2;
 
-    printf("Escolha o tipo do jogador 1 (1 representa 0 e 4 representa X): ");
+    printf("Escolha o tipo do jogador 1 (1 representa O e 4 representa X): ");
     scanf("%d", &tipo1);
 
     while(tipo1 != O && tipo1 != X){
-        printf("Escolha invalida (selecione 1 para 0 e 4 para X): ");
+        printf("Escolha invalida (selecione 1 para O e 4 para X): ");
         scanf("%d", &tipo1);
     }
-
-    (*jogador1).tipo = tipo1;
-
-    printf("Escolha o tipo do jogador 2 (1 representa O e 4 representa X): ");
-    scanf("%d", &tipo2);
-
-    while(tipo2 != O && tipo2 != X){
-        printf("Escolha invalida (selecione 1 para 0 e 4 para X): ");
-        scanf("%d", &tipo2);
+    if(tipo1 == O){
+        tipo2 = X;
+    } else{
+        tipo2= O;
     }
 
-    (*jogador2).tipo = tipo2;
+    (*humano).tipo = tipo1;
+    (*ia).tipo = tipo2;
+
+    printf("Jogador Humano configurado como %c e Jogador IA configurado como %c\n", conversao(tipo1), conversao(tipo2));
 }
 
-void inicia(Tabuleiro *tab, JogadorTeclado *jogador1, JogadorTeclado *jogador2){
+void inicia(Tabuleiro *tab, JogadorTeclado *humano, JogadorIA *ia){
     inicializaTabuleiro(tab);
     desenha(tab);
 
@@ -34,9 +32,9 @@ void inicia(Tabuleiro *tab, JogadorTeclado *jogador1, JogadorTeclado *jogador2){
 
     while(vencedor == 0){
         if(vez % 2 == 0){
-            joga(jogador1, tab);
+            joga(humano, tab);
         } else {
-            joga(jogador2, tab);
+            jogaIA(tab, ia);
         }
         desenha(tab);
         vencedor = temVencedor(tab);

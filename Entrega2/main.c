@@ -4,10 +4,11 @@
 
 int main(){
     Tabuleiro tab;
-    JogadorTeclado jogador1, jogador2;
+    JogadorTeclado humano;
+    JogadorIA ia;
 
-    configuraJogadores(&jogador1, &jogador2);
-    inicia(&tab, &jogador1, &jogador2);
-    
+    configuraJogadores(&humano, &ia);
+    inicia(&tab, &humano, &ia);
+
     return 0;
 }

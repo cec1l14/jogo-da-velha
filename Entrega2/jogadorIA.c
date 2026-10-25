@@ -1,14 +1,12 @@
 #include <stdio.h>
+#include "jogadorIA.h"
 
-typedef struct{
-    int tipo;
-} JogadorIA;
-// nao mexi nisso direito ainda
-
-void joga(Tabuleiro *tab, JogadorIA *jogador); // acho q o nome dos ponteiros iguais gera confusao n sei
+void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiros iguais gera confusao n sei
 
     int jogadorHumano;
-    if (jogador->tipo == 1) {
+
+    if (jogadoria->tipo == 1)
+    {
         jogadorHumano = 4;
     } else {
         jogadorHumano = 1;
@@ -37,8 +35,8 @@ void joga(Tabuleiro *tab, JogadorIA *jogador); // acho q o nome dos ponteiros ig
             opostos_coluna = 0;
         }
 
-        if (M[cantos_linha][cantos_coluna] == jogadorHumano && M[opostos_linha][opostos_coluna] == 0) {
-            marcaJogada(tab, opostos_linha, opostos_coluna, jogador->tipo);
+        if ((*tab).M[cantos_linha][cantos_coluna] == jogadorHumano && (*tab).M[opostos_linha][opostos_coluna] == 0) {
+            marcaJogada(tab, opostos_linha, opostos_coluna, jogadoria->tipo);
             return; // acho q precisa de return pra parar ne? pq se nao vai continuar
         }
     }
@@ -48,8 +46,8 @@ void joga(Tabuleiro *tab, JogadorIA *jogador); // acho q o nome dos ponteiros ig
     for (int i = 0; i < 4; i++) {
         int cantos_linha = cantos[i][0];
         int cantos_coluna = cantos[i][1];
-        if (M[cantos_linha][cantos_coluna] == 0) {
-            marcaJogada(tab, cantos_linha, cantos_coluna, jogador->tipo);
+        if ((*tab).M[cantos_linha][cantos_coluna] == 0) {
+            marcaJogada(tab, cantos_linha, cantos_coluna, jogadoria->tipo);
             return;
         }
     }
@@ -59,9 +57,10 @@ void joga(Tabuleiro *tab, JogadorIA *jogador); // acho q o nome dos ponteiros ig
 
     for (int linha = 0; linha < 3; linha++) {
         for (int coluna = 0; coluna < 3; coluna++) {
-            if (M[linha][coluna] == 0) {
-                marcaJogada(tab, linha, coluna, jogador->tipo);
+            if ((*tab).M[linha][coluna] == 0) {
+                marcaJogada(tab, linha, coluna, jogadoria->tipo);
                 return;
             }
         }
     }
+}
