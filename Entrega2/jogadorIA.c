@@ -173,7 +173,7 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
                 }
             }
             
-            if (soma_arredores >= 2){
+            if (soma_arredores >= 2 && (*tab).M[i][j] == VAZIO){
                 marcaJogada(tab, i, j, jogadoria->tipo);
                 return;
             }
