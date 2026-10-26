@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "jogadorIA.h"
 
-void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jogadorTeclado já possui joga
+void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jogadorTeclado já possui a função joga
 
     int jogadorHumano;
 
