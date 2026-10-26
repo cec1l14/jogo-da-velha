@@ -145,6 +145,41 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
         return;
     }
     // R2. Se houver uma jogada que crie duas sequências de duas marcações, use-a. 
+    
+    int arredores_i, arredores_j, soma_arredores;
+    
+    for (int i = 0; i < 3; i++){
+        
+        for(int j = 0; i < 3; j++){
+            
+            soma_arredores = 0;
+            
+            for(int k = -1; k <=1; k++){
+                
+                for(int l = -1; l <= 1; l++){
+
+                    if(k == 0 && l == 0){
+                        continue;
+                    }
+                    
+                    arredores_i = i + k;
+                    arredores_j = j + l;
+                    
+                    if(arredores_i > 0 && arredores_i < 3 && arredores_j > 0 && arredores_j < 3){
+                        if((*tab).M[arredores_i][arredores_j] == jogadoria->tipo){
+                            soma_arredores += 1;
+                        }
+                    }
+                }
+            }
+            
+            if (soma_arredores >= 2){
+                marcaJogada(tab, i, j, jogadoria->tipo);
+                return;
+            }
+            
+        }
+    }
 
     // R3. Se o quadrado central estiver livre, marque-o.
 
@@ -154,11 +189,9 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
     }
     
     // R4: Se seu oponente tiver marcado um dos cantos, marque o canto oposto
+    
     int cantos_linha, cantos_coluna, opostos_linha, opostos_coluna;
-
-    // vetor fica facil, talvez struct seja mais agradavel dps vejo
-    // pq vai pegando em ordem
-
+    
     int cantos[4][2] = {{0, 0}, {0, 2}, {2, 2}, {2, 0}};
 
     for (int i = 0; i < 4; i++) {
@@ -179,12 +212,12 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
 
         if ((*tab).M[cantos_linha][cantos_coluna] == jogadorHumano && (*tab).M[opostos_linha][opostos_coluna] == 0) {
             marcaJogada(tab, opostos_linha, opostos_coluna, jogadoria->tipo);
-            return; // acho q precisa de return pra parar ne? pq se nao vai continuar
+            return; 
         }
     }
 
     // R5: Se houver um canto vazio, marque-o.
-    // randomizavel tb esse, da p fazer um armazenamento em lista e dps sortear, dps agnt ve
+    
     for (int i = 0; i < 4; i++) {
         int cantos_linha = cantos[i][0];
         int cantos_coluna = cantos[i][1];
@@ -195,7 +228,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
     }
 
     // R6:  Marque arbitrariamente um quadrado vazio
-    // logica simples sem usar rand
 
     for (int linha = 0; linha < 3; linha++) {
         for (int coluna = 0; coluna < 3; coluna++) {
