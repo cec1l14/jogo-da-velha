@@ -26,6 +26,12 @@ Partida entre um **jogador humano** (teclado) e um **jogador IA**, na mesma máq
 | R5 | Se houver um canto vazio, marque-o. |
 | R6 | Marque arbitrariamente um quadrado vazio. |
 
+**Como clonar**
+
+```bash
+git clone https://github.com/cec1l14/jogo-da-velha.git
+```
+
 **Como compilar**
 
 ```bash
