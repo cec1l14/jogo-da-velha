@@ -1,3 +1,14 @@
+/****
+ * Implementação do módulo: jogadorTeclado
+ * Autores: Cecília Candeia e Matheus Fernandes
+ * Data de Criação: 19/10/2026
+ * Última alteração: 26/10/2026
+ * Descrição Geral: jogador humano que joga pelo teclado. A função joga() pede
+ *   a linha e a coluna (de 0 a 2) e repete a leitura enquanto a posição estiver
+ *   fora do tabuleiro ou ocupada. Depois marca a casa com o símbolo (tipo) do
+ *   jogador.
+ ****/
+
 #include <stdio.h>
 #include "jogadorTeclado.h"
 

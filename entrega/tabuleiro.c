@@ -1,3 +1,16 @@
+/****
+ * Implementação do módulo: tabuleiro
+ * Autores: Cecília Candeia e Matheus Fernandes
+ * Data de Criação: 19/10/2026
+ * Última alteração: 26/10/2026
+ * Descrição Geral: representa o tabuleiro do jogo da velha como uma matriz 3x3
+ *   de inteiros (0 = casa vazia, 1 = O, 4 = X). Oferece funções para zerar o
+ *   tabuleiro, converter um valor no caractere exibido, desenhar o estado atual
+ *   na tela, registrar uma jogada e verificar o resultado da partida: soma 3 de
+ *   uma linha indica vitória de O, soma 12 indica vitória de X, e o tabuleiro
+ *   cheio sem vencedor e empate.
+ ****/
+
 #include <stdio.h>
 #include "tabuleiro.h"
 

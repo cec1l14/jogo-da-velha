@@ -1,3 +1,17 @@
+/****
+ * Implementação do módulo: jogadorIA
+ * Autores: Cecília Candeia e Matheus Fernandes
+ * Data de Criação: 23/10/2026
+ * Última alteração: 26/10/2026
+ * Descrição Geral: jogador controlado pelo computador. A função jogaIA()
+ *   aplica seis regras, testadas na ordem, e encerra o turno na primeira que
+ *   resultar em jogada: R1 (completa a própria sequência de duas peças ou
+ *   bloqueia a do oponente), R2 (cria duas sequências de duas peças), R3
+ *   (centro livre), R4 (canto oposto ao do oponente), R5 (canto vazio) e
+ *   R6 (qualquer casa vazia). O nome jogaIA evita conflito com a função joga()
+ *   do jogadorTeclado.
+ ****/
+
 #include <stdio.h>
 #include "jogadorIA.h"
 

@@ -1,3 +1,14 @@
+/****
+ * Implementação do módulo: partida
+ * Autores: Cecília Candeia e Matheus Fernandes
+ * Data de Criação: 19/10/2026
+ * Última alteração: 26/10/2026
+ * Descrição Geral: controla o jogo. configuraJogadores() pergunta o modo
+ *   (humano contra humano ou humano contra IA) e o símbolo do jogador 1; o
+ *   segundo jogador recebe o símbolo oposto. inicia() zera o tabuleiro e repete
+ *   o laço de jogadas, alternando os jogadores, até haver vencedor ou empate.
+ ****/
+
 #include <stdio.h>
 #include "partida.h"
 
