@@ -17,8 +17,8 @@ void configuraJogadores(JogadorTeclado *humano, JogadorIA *ia){
         tipo2= O;
     }
 
-    (*humano).tipo = tipo1;
-    (*ia).tipo = tipo2;
+    humano->tipo = tipo1;
+    ia->tipo = tipo2;
 
     printf("Jogador Humano configurado como %c e Jogador IA configurado como %c\n", conversao(tipo1), conversao(tipo2));
 }
@@ -34,7 +34,7 @@ void inicia(Tabuleiro *tab, JogadorTeclado *humano, JogadorIA *ia){
         if(vez % 2 == 0){
             joga(humano, tab);
         } else {
-            printf("\n Turno do Jogador %c. \n", conversao((*ia).tipo));
+            printf("\n Turno do Jogador %c. \n", conversao(ia->tipo));
             jogaIA(tab, ia);
         }
         desenha(tab);

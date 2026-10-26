@@ -17,8 +17,8 @@ void configuraJogadores(JogadorTeclado *jogador1, JogadorTeclado *jogador2){
         tipo2= O;
     }
 
-    (*jogador1).tipo = tipo1;
-    (*jogador2).tipo = tipo2;
+    jogador1->tipo = tipo1;
+    jogador2->tipo = tipo2;
 
     printf("Jogador 1 configurado como %c e Jogador 2 configurado como %c\n", conversao(tipo1), conversao(tipo2));
 }

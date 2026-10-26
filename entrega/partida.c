@@ -4,9 +4,9 @@
 void configuraJogadores(int *modo, JogadorTeclado *humano1, JogadorTeclado *humano2, JogadorIA *ia){
     int tipo1, tipo2;
 
-    printf("Escolha o modo de jogo:\n");
     printf("1 - Humano vs Humano\n");
     printf("2 - Humano vs IA\n");
+    printf("Escolha o modo de jogo:\n");
     scanf("%d", modo);
 
     while(*modo != MODO_HUMANO_VS_HUMANO && *modo != MODO_HUMANO_VS_IA){
@@ -28,8 +28,8 @@ void configuraJogadores(int *modo, JogadorTeclado *humano1, JogadorTeclado *huma
             tipo2= O;
         }
 
-        (*humano1).tipo = tipo1;
-        (*humano2).tipo = tipo2;
+        humano1->tipo = tipo1;
+        humano2->tipo = tipo2;
 
         printf("Jogador Humano 1 configurado como %c e Jogador Humano 2 configurado como %c\n", conversao(tipo1), conversao(tipo2));
 
@@ -47,8 +47,8 @@ void configuraJogadores(int *modo, JogadorTeclado *humano1, JogadorTeclado *huma
         tipo2= O;
     }
 
-    (*humano1).tipo = tipo1;
-    (*ia).tipo = tipo2;
+    humano1->tipo = tipo1;
+    ia->tipo = tipo2;
 
     printf("Jogador Humano configurado como %c e Jogador IA configurado como %c\n", conversao(tipo1), conversao(tipo2));
 }
@@ -66,7 +66,7 @@ void inicia(Tabuleiro *tab, int modo, JogadorTeclado *humano1, JogadorTeclado *h
         } else if(modo == MODO_HUMANO_VS_HUMANO){
             joga(humano2, tab);
         } else {
-            printf("\n Turno do Jogador %c. \n", conversao((*ia).tipo));
+            printf("\n Turno do Jogador %c. \n", conversao(ia->tipo));
             jogaIA(tab, ia);
         }
         desenha(tab);

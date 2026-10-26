@@ -3,7 +3,7 @@
 
 void joga(JogadorTeclado *jogador, Tabuleiro *tab){
     
-    printf("\n Turno do Jogador %c. \n", conversao((*jogador).tipo));
+    printf("\n Turno do Jogador %c. \n", conversao(jogador->tipo));
     
     int linha, coluna;
     int jogadaValida = 0; 
@@ -16,8 +16,8 @@ void joga(JogadorTeclado *jogador, Tabuleiro *tab){
         scanf("%d", &coluna);
         
         
-        if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && (*tab).M[linha][coluna] == VAZIO) {
-            marcaJogada(tab, linha, coluna, (*jogador).tipo);
+        if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tab->M[linha][coluna] == VAZIO) {
+            marcaJogada(tab, linha, coluna, jogador->tipo);
             jogadaValida = 1;
         } else {
             printf("Jogada invalida! A jogada desejada esta em uma posicao fora do tabuleiro ou ocupada.\n");

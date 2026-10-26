@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "jogadorIA.h"
 
-void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiros iguais gera confusao n sei
+void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ 
 
     int jogadorHumano;
 
-    if (jogadoria->tipo == 1)
+    if (jogadorIA->tipo == 1)
     {
         jogadorHumano = 4;
     } else {
@@ -21,62 +21,62 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
         // parte IA
         // verificação das linhas 
 
-        if ((*tab).M[i][0] == (*jogadoria).tipo && (*tab).M[i][1] == (*jogadoria).tipo && (*tab).M[i][2] == VAZIO) {
-            marcaJogada(tab, i, 2, jogadoria->tipo);
+        if (tab->M[i][0] == jogadorIA->tipo && tab->M[i][1] == jogadorIA->tipo && tab->M[i][2] == VAZIO) {
+            marcaJogada(tab, i, 2, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[i][1] == (*jogadoria).tipo && (*tab).M[i][2] == (*jogadoria).tipo && (*tab).M[i][0] == VAZIO) {
-            marcaJogada(tab, i, 0, jogadoria->tipo);
+        if (tab->M[i][1] == jogadorIA->tipo && tab->M[i][2] == jogadorIA->tipo && tab->M[i][0] == VAZIO) {
+            marcaJogada(tab, i, 0, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[i][0] == (*jogadoria).tipo && (*tab).M[i][2] == (*jogadoria).tipo && (*tab).M[i][1] == VAZIO) {
-            marcaJogada(tab, i, 1, jogadoria->tipo);
+        if (tab->M[i][0] == jogadorIA->tipo && tab->M[i][2] == jogadorIA->tipo && tab->M[i][1] == VAZIO) {
+            marcaJogada(tab, i, 1, jogadorIA->tipo);
             return;
         }
 
         // verificação das colunas
 
-        if ((*tab).M[0][i] == (*jogadoria).tipo && (*tab).M[1][i] == (*jogadoria).tipo && (*tab).M[2][i] == VAZIO) {
-            marcaJogada(tab, 2, i, jogadoria->tipo);
+        if (tab->M[0][i] == jogadorIA->tipo && tab->M[1][i] == jogadorIA->tipo && tab->M[2][i] == VAZIO) {
+            marcaJogada(tab, 2, i, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[1][i] == (*jogadoria).tipo && (*tab).M[2][i] == (*jogadoria).tipo && (*tab).M[0][i] == VAZIO) {
-            marcaJogada(tab, 0, i, jogadoria->tipo);
+        if (tab->M[1][i] == jogadorIA->tipo && tab->M[2][i] == jogadorIA->tipo && tab->M[0][i] == VAZIO) {
+            marcaJogada(tab, 0, i, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[0][i] == (*jogadoria).tipo && (*tab).M[2][i] == (*jogadoria).tipo && (*tab).M[1][i] == VAZIO) {
-            marcaJogada(tab, 1, i, jogadoria->tipo);
+        if (tab->M[0][i] == jogadorIA->tipo && tab->M[2][i] == jogadorIA->tipo && tab->M[1][i] == VAZIO) {
+            marcaJogada(tab, 1, i, jogadorIA->tipo);
             return;
         }
     }
 
     // verificação da diagonal principal
 
-    if ((*tab).M[0][0] == (*jogadoria).tipo && (*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][2] == VAZIO) {
-        marcaJogada(tab, 2, 2, jogadoria->tipo);
+    if (tab->M[0][0] == jogadorIA->tipo && tab->M[1][1] == jogadorIA->tipo && tab->M[2][2] == VAZIO) {
+        marcaJogada(tab, 2, 2, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][2] == (*jogadoria).tipo && (*tab).M[0][0] == VAZIO) {
-        marcaJogada(tab, 0, 0, jogadoria->tipo);
+    if (tab->M[1][1] == jogadorIA->tipo && tab->M[2][2] == jogadorIA->tipo && tab->M[0][0] == VAZIO) {
+        marcaJogada(tab, 0, 0, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[0][0] == (*jogadoria).tipo && (*tab).M[2][2] == (*jogadoria).tipo && (*tab).M[1][1] == VAZIO) {
-        marcaJogada(tab, 1, 1, jogadoria->tipo);
+    if (tab->M[0][0] == jogadorIA->tipo && tab->M[2][2] == jogadorIA->tipo && tab->M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
 
     // verificação da diagonal secundária
 
-    if ((*tab).M[0][2] == (*jogadoria).tipo && (*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][0] == VAZIO) {
-        marcaJogada(tab, 2, 0, jogadoria->tipo);
+    if (tab->M[0][2] == jogadorIA->tipo && tab->M[1][1] == jogadorIA->tipo && tab->M[2][0] == VAZIO) {
+        marcaJogada(tab, 2, 0, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[1][1] == (*jogadoria).tipo && (*tab).M[2][0] == (*jogadoria).tipo && (*tab).M[0][2] == VAZIO) {
-        marcaJogada(tab, 0, 2, jogadoria->tipo);
+    if (tab->M[1][1] == jogadorIA->tipo && tab->M[2][0] == jogadorIA->tipo && tab->M[0][2] == VAZIO) {
+        marcaJogada(tab, 0, 2, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[0][2] == (*jogadoria).tipo && (*tab).M[2][0] == (*jogadoria).tipo && (*tab).M[1][1] == VAZIO) {
-        marcaJogada(tab, 1, 1, jogadoria->tipo);
+    if (tab->M[0][2] == jogadorIA->tipo && tab->M[2][0] == jogadorIA->tipo && tab->M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
 
@@ -85,62 +85,62 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
         // parte humano
         // verificação das linhas
 
-        if ((*tab).M[i][0] == jogadorHumano && (*tab).M[i][1] == jogadorHumano && (*tab).M[i][2] == VAZIO) {
-            marcaJogada(tab, i, 2, jogadoria->tipo);
+        if (tab->M[i][0] == jogadorHumano && tab->M[i][1] == jogadorHumano && tab->M[i][2] == VAZIO) {
+            marcaJogada(tab, i, 2, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[i][1] == jogadorHumano && (*tab).M[i][2] == jogadorHumano && (*tab).M[i][0] == VAZIO) {
-            marcaJogada(tab, i, 0, jogadoria->tipo);
+        if (tab->M[i][1] == jogadorHumano && tab->M[i][2] == jogadorHumano && tab->M[i][0] == VAZIO) {
+            marcaJogada(tab, i, 0, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[i][0] == jogadorHumano && (*tab).M[i][2] == jogadorHumano && (*tab).M[i][1] == VAZIO) {
-            marcaJogada(tab, i, 1, jogadoria->tipo);
+        if (tab->M[i][0] == jogadorHumano && tab->M[i][2] == jogadorHumano && tab->M[i][1] == VAZIO) {
+            marcaJogada(tab, i, 1, jogadorIA->tipo);
             return;
         }
 
         // verificação das colunas
 
-        if ((*tab).M[0][i] == jogadorHumano && (*tab).M[1][i] == jogadorHumano && (*tab).M[2][i] == VAZIO) {
-            marcaJogada(tab, 2, i, jogadoria->tipo);
+        if (tab->M[0][i] == jogadorHumano && tab->M[1][i] == jogadorHumano && tab->M[2][i] == VAZIO) {
+            marcaJogada(tab, 2, i, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[1][i] == jogadorHumano && (*tab).M[2][i] == jogadorHumano && (*tab).M[0][i] == VAZIO) {
-            marcaJogada(tab, 0, i, jogadoria->tipo);
+        if (tab->M[1][i] == jogadorHumano && tab->M[2][i] == jogadorHumano && tab->M[0][i] == VAZIO) {
+            marcaJogada(tab, 0, i, jogadorIA->tipo);
             return;
         }
-        if ((*tab).M[0][i] == jogadorHumano && (*tab).M[2][i] == jogadorHumano && (*tab).M[1][i] == VAZIO) {
-            marcaJogada(tab, 1, i, jogadoria->tipo);
+        if (tab->M[0][i] == jogadorHumano && tab->M[2][i] == jogadorHumano && tab->M[1][i] == VAZIO) {
+            marcaJogada(tab, 1, i, jogadorIA->tipo);
             return;
         }
     }
 
     // verificação da diagonal principal
 
-    if ((*tab).M[0][0] == jogadorHumano && (*tab).M[1][1] == jogadorHumano && (*tab).M[2][2] == VAZIO) {
-        marcaJogada(tab, 2, 2, jogadoria->tipo);
+    if (tab->M[0][0] == jogadorHumano && tab->M[1][1] == jogadorHumano && tab->M[2][2] == VAZIO) {
+        marcaJogada(tab, 2, 2, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[1][1] == jogadorHumano && (*tab).M[2][2] == jogadorHumano && (*tab).M[0][0] == VAZIO) {
-        marcaJogada(tab, 0, 0, jogadoria->tipo);
+    if (tab->M[1][1] == jogadorHumano && tab->M[2][2] == jogadorHumano && tab->M[0][0] == VAZIO) {
+        marcaJogada(tab, 0, 0, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[0][0] == jogadorHumano && (*tab).M[2][2] == jogadorHumano && (*tab).M[1][1] == VAZIO) {
-        marcaJogada(tab, 1, 1, jogadoria->tipo);
+    if (tab->M[0][0] == jogadorHumano && tab->M[2][2] == jogadorHumano && tab->M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
 
     // verificação da diagonal secundária
 
-    if ((*tab).M[0][2] == jogadorHumano && (*tab).M[1][1] == jogadorHumano && (*tab).M[2][0] == VAZIO) {
-        marcaJogada(tab, 2, 0, jogadoria->tipo);
+    if (tab->M[0][2] == jogadorHumano && tab->M[1][1] == jogadorHumano && tab->M[2][0] == VAZIO) {
+        marcaJogada(tab, 2, 0, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[1][1] == jogadorHumano && (*tab).M[2][0] == jogadorHumano && (*tab).M[0][2] == VAZIO) {
-        marcaJogada(tab, 0, 2, jogadoria->tipo);
+    if (tab->M[1][1] == jogadorHumano && tab->M[2][0] == jogadorHumano && tab->M[0][2] == VAZIO) {
+        marcaJogada(tab, 0, 2, jogadorIA->tipo);
         return;
     }
-    if ((*tab).M[0][2] == jogadorHumano && (*tab).M[2][0] == jogadorHumano && (*tab).M[1][1] == VAZIO) {
-        marcaJogada(tab, 1, 1, jogadoria->tipo);
+    if (tab->M[0][2] == jogadorHumano && tab->M[2][0] == jogadorHumano && tab->M[1][1] == VAZIO) {
+        marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
 
@@ -166,15 +166,15 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
                     arredores_j = j + l;
                     
                     if(arredores_i >= 0 && arredores_i < 3 && arredores_j >= 0 && arredores_j < 3){
-                        if((*tab).M[arredores_i][arredores_j] == jogadoria->tipo){
+                        if(tab->M[arredores_i][arredores_j] == jogadorIA->tipo){
                             soma_arredores += 1;
                         }
                     }
                 }
             }
             
-            if (soma_arredores >= 2 && (*tab).M[i][j] == VAZIO){
-                marcaJogada(tab, i, j, jogadoria->tipo);
+            if (soma_arredores >= 2 && tab->M[i][j] == VAZIO){
+                marcaJogada(tab, i, j, jogadorIA->tipo);
                 return;
             }
             
@@ -183,8 +183,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
 
     // R3. Se o quadrado central estiver livre, marque-o.
 
-    if((*tab).M[1][1] == VAZIO){
-        marcaJogada(tab, 1, 1, jogadoria->tipo);
+    if(tab->M[1][1] == VAZIO){
+        marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
     
@@ -210,8 +210,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
             opostos_coluna = 0;
         }
 
-        if ((*tab).M[cantos_linha][cantos_coluna] == jogadorHumano && (*tab).M[opostos_linha][opostos_coluna] == 0) {
-            marcaJogada(tab, opostos_linha, opostos_coluna, jogadoria->tipo);
+        if (tab->M[cantos_linha][cantos_coluna] == jogadorHumano && tab->M[opostos_linha][opostos_coluna] == VAZIO) {
+            marcaJogada(tab, opostos_linha, opostos_coluna, jogadorIA->tipo);
             return; 
         }
     }
@@ -221,8 +221,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
     for (int i = 0; i < 4; i++) {
         int cantos_linha = cantos[i][0];
         int cantos_coluna = cantos[i][1];
-        if ((*tab).M[cantos_linha][cantos_coluna] == 0) {
-            marcaJogada(tab, cantos_linha, cantos_coluna, jogadoria->tipo);
+        if (tab->M[cantos_linha][cantos_coluna] == VAZIO) {
+            marcaJogada(tab, cantos_linha, cantos_coluna, jogadorIA->tipo);
             return;
         }
     }
@@ -231,8 +231,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria){ // acho q o nome dos ponteiro
 
     for (int linha = 0; linha < 3; linha++) {
         for (int coluna = 0; coluna < 3; coluna++) {
-            if ((*tab).M[linha][coluna] == 0) {
-                marcaJogada(tab, linha, coluna, jogadoria->tipo);
+            if (tab->M[linha][coluna] == VAZIO) {
+                marcaJogada(tab, linha, coluna, jogadorIA->tipo);
                 return;
             }
         }

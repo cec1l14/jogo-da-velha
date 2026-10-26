@@ -6,6 +6,6 @@ typedef struct{
     int tipo;
 } JogadorIA;
 
-void jogaIA(Tabuleiro *tab, JogadorIA *jogadoria);
+void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA);
 
 #endif
