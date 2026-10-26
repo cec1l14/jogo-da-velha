@@ -34,6 +34,7 @@ void inicia(Tabuleiro *tab, JogadorTeclado *humano, JogadorIA *ia){
         if(vez % 2 == 0){
             joga(humano, tab);
         } else {
+            printf("\n Turno do Jogador %c. \n", conversao((*ia).tipo));
             jogaIA(tab, ia);
         }
         desenha(tab);
