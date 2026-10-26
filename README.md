@@ -13,11 +13,6 @@ Jogo da velha para **dois jogadores humanos**, jogando pelo teclado na mesma má
 
 **Representação do tabuleiro:** cada casa guarda um inteiro: `0` (vazia), `1` (`O`) ou `4` (`X`). Somando as casas de uma linha, coluna ou diagonal, o resultado `3` indica vitória de `O` e `12` indica vitória de `X`.
 
-**Como compilar**
-
-```bash
-gcc *.c -o teste.exe
-```
 ### Módulo IA
 
 Partida entre um **jogador humano** (teclado) e um **jogador IA**, na mesma máquina. O humano joga primeiro, e a partida segue até haver vencedor ou empate.
@@ -32,6 +27,10 @@ Partida entre um **jogador humano** (teclado) e um **jogador IA**, na mesma máq
 | R6 | Marque arbitrariamente um quadrado vazio. |
 
 **Como compilar**
+
+```bash
+cd jogo-da-vea/entrega
+```
 
 ```bash
 gcc *.c -o jogo.exe
