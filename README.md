@@ -26,6 +26,10 @@ Partida entre um **jogador humano** (teclado) e um **jogador IA**, na mesma máq
 | R5 | Se houver um canto vazio, marque-o. |
 | R6 | Marque arbitrariamente um quadrado vazio. |
 
+### Módulo Jogador Remoto
+
+Partida entre um **jogador humano local** e um **jogador remoto**, que roda em outro processo, na mesma máquina ou em outro computador da rede. A comunicação usa **sockets TCP**, no modelo cliente-servidor
+
 **Como clonar**
 
 ```bash
