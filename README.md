@@ -7,6 +7,25 @@ Em suma, o projeto está dividido em três implementações básicas:
 2. Módulo IA: Humanos vs. "IA", na mesma máquina;
 3. Módulo Jogador Remoto: Humano vs. Humano, na mesma máquina ou de forma remota.
 
+### Estrutura do projeto
+
+```
+jogo-da-velha/
+├── README.md
+├── LICENSE
+├── .gitignore 
+├── entrega/              
+│   ├── main.c
+│   ├── partida.c / partida.h
+│   ├── tabuleiro.c / tabuleiro.h
+│   ├── jogadorTeclado.c / jogadorTeclado.h
+│   └── jogadorIA.c / jogadorIA.h
+├── modulo1/              
+├── modulo2/             
+├── modulo3/              
+├── r7.c / r7.h           
+```
+
 ### Módulo Jogo de Tabuleiro
 
 Jogo da velha para **dois jogadores humanos**, jogando pelo teclado na mesma máquina. O jogo termina quando um dos jogadores alinha três símbolos (em linha, coluna ou diagonal) ou quando o tabuleiro enche sem vencedor, resultando em empate.
