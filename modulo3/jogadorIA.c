@@ -171,52 +171,52 @@ for (int i = 0; i<3; i++){
         
         if (tab->M[i][j] == 0){
             
-            marcaJogada(tab,i,j,jogadoria->tipo);
+            marcaJogada(tab,i,j,jogadorIA->tipo);
             duplasIA = 0;
 
             // olhando linhas
-            if((tab->M[0][0]==jogadoria->tipo && tab->M[0][1]==jogadoria->tipo && tab->M[0][2]==0) ||
-               (tab->M[0][0]==jogadoria->tipo && tab->M[0][2]==jogadoria->tipo && tab->M[0][1]==0) ||
-               (tab->M[0][1]==jogadoria->tipo && tab->M[0][2]==jogadoria->tipo && tab->M[0][0]==0)){
+            if((tab->M[0][0]==jogadorIA->tipo && tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==0) ||
+               (tab->M[0][0]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][1]==0) ||
+               (tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][0]==0)){
                 duplasIA++;
             }
-            if((tab->M[1][0]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[1][2]==0) ||
-               (tab->M[1][0]==jogadoria->tipo && tab->M[1][2]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[1][2]==jogadoria->tipo && tab->M[1][0]==0)){
+            if((tab->M[1][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[1][2]==0) ||
+               (tab->M[1][0]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[1][0]==0)){
                 duplasIA++;
             }
-            if((tab->M[2][0]==jogadoria->tipo && tab->M[2][1]==jogadoria->tipo && tab->M[2][2]==0) ||
-               (tab->M[2][0]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[2][1]==0) ||
-               (tab->M[2][1]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[2][0]==0)){
+            if((tab->M[2][0]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[2][2]==0) ||
+               (tab->M[2][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[2][1]==0) ||
+               (tab->M[2][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[2][0]==0)){
                 duplasIA++;
             }
 
             // olhando colunas
-            if((tab->M[0][0]==jogadoria->tipo && tab->M[1][0]==jogadoria->tipo && tab->M[2][0]==0) ||
-               (tab->M[0][0]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[1][0]==0) ||
-               (tab->M[1][0]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[0][0]==0)){
+            if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==0) ||
+               (tab->M[0][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][0]==0) ||
+               (tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][0]==0)){
                 duplasIA++;
             }
-            if((tab->M[0][1]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[2][1]==0) ||
-               (tab->M[0][1]==jogadoria->tipo && tab->M[2][1]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[2][1]==jogadoria->tipo && tab->M[0][1]==0)){
+            if((tab->M[0][1]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][1]==0) ||
+               (tab->M[0][1]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[0][1]==0)){
                 duplasIA++;
             }
-            if((tab->M[0][2]==jogadoria->tipo && tab->M[1][2]==jogadoria->tipo && tab->M[2][2]==0) ||
-               (tab->M[0][2]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[1][2]==0) ||
-               (tab->M[1][2]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[0][2]==0)){
+            if((tab->M[0][2]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[2][2]==0) ||
+               (tab->M[0][2]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][2]==0) ||
+               (tab->M[1][2]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][2]==0)){
                 duplasIA++;
             }
 
             // olhando diagonais
-            if((tab->M[0][0]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[2][2]==0) ||
-               (tab->M[0][0]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[0][0]==0)){
+            if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==0) ||
+               (tab->M[0][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][0]==0)){
                 duplasIA++;
             }
-            if((tab->M[0][2]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[2][0]==0) ||
-               (tab->M[0][2]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[0][2]==0)){
+            if((tab->M[0][2]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][0]==0) ||
+               (tab->M[0][2]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][2]==0)){
                 duplasIA++;
             }
 
@@ -307,7 +307,7 @@ for (int i = 0; i<3; i++){
     }
 }
 if (possiveisForks == 1){
-    marcaJogada(tab,possiveisJogadas[0][0],possiveisJogadas[0][1],jogadoria->tipo);
+    marcaJogada(tab,possiveisJogadas[0][0],possiveisJogadas[0][1],jogadorIA->tipo);
     return;
 
 } else if (possiveisForks > 1){
@@ -323,13 +323,13 @@ if (possiveisForks == 1){
                 casasVazias[l][1] = -100;
             }
             
-            marcaJogada(tab,i,j,jogadoria->tipo);
+            marcaJogada(tab,i,j,jogadorIA->tipo);
             duplasIA = 0;
 
             // olhando linhas
-            if((tab->M[0][0]==jogadoria->tipo && tab->M[0][1]==jogadoria->tipo && tab->M[0][2]==0) ||
-               (tab->M[0][0]==jogadoria->tipo && tab->M[0][2]==jogadoria->tipo && tab->M[0][1]==0) ||
-               (tab->M[0][1]==jogadoria->tipo && tab->M[0][2]==jogadoria->tipo && tab->M[0][0]==0)){
+            if((tab->M[0][0]==jogadorIA->tipo && tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==0) ||
+               (tab->M[0][0]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][1]==0) ||
+               (tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][0]==0)){
                    
                 duplasIA++;
                 
@@ -346,9 +346,9 @@ if (possiveisForks == 1){
                     casasVazias[0][1] = 2; 
                 }
             }
-            if((tab->M[1][0]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[1][2]==0) ||
-               (tab->M[1][0]==jogadoria->tipo && tab->M[1][2]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[1][2]==jogadoria->tipo && tab->M[1][0]==0)){
+            if((tab->M[1][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[1][2]==0) ||
+               (tab->M[1][0]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[1][0]==0)){
                    
                 duplasIA++;
                 
@@ -365,9 +365,9 @@ if (possiveisForks == 1){
                     casasVazias[1][1] = 2; 
                 }
             }
-            if((tab->M[2][0]==jogadoria->tipo && tab->M[2][1]==jogadoria->tipo && tab->M[2][2]==0) ||
-               (tab->M[2][0]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[2][1]==0) ||
-               (tab->M[2][1]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[2][0]==0)){
+            if((tab->M[2][0]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[2][2]==0) ||
+               (tab->M[2][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[2][1]==0) ||
+               (tab->M[2][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[2][0]==0)){
                    
                 duplasIA++;
                 
@@ -387,9 +387,9 @@ if (possiveisForks == 1){
             }
 
             // olhando colunas
-            if((tab->M[0][0]==jogadoria->tipo && tab->M[1][0]==jogadoria->tipo && tab->M[2][0]==0) ||
-               (tab->M[0][0]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[1][0]==0) ||
-               (tab->M[1][0]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[0][0]==0)){
+            if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==0) ||
+               (tab->M[0][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][0]==0) ||
+               (tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][0]==0)){
                    
                 duplasIA++;
                 
@@ -406,9 +406,9 @@ if (possiveisForks == 1){
                     casasVazias[3][1] = 0; 
                 }
             }
-            if((tab->M[0][1]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[2][1]==0) ||
-               (tab->M[0][1]==jogadoria->tipo && tab->M[2][1]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[2][1]==jogadoria->tipo && tab->M[0][1]==0)){
+            if((tab->M[0][1]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][1]==0) ||
+               (tab->M[0][1]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[0][1]==0)){
                    
                 duplasIA++;
                 
@@ -425,9 +425,9 @@ if (possiveisForks == 1){
                     casasVazias[4][1] = 1; 
                 }
             }
-            if((tab->M[0][2]==jogadoria->tipo && tab->M[1][2]==jogadoria->tipo && tab->M[2][2]==0) ||
-               (tab->M[0][2]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[1][2]==0) ||
-               (tab->M[1][2]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[0][2]==0)){
+            if((tab->M[0][2]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[2][2]==0) ||
+               (tab->M[0][2]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][2]==0) ||
+               (tab->M[1][2]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][2]==0)){
                    
                 duplasIA++;
                 
@@ -446,9 +446,9 @@ if (possiveisForks == 1){
             }
 
             // olhando diagonais
-            if((tab->M[0][0]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[2][2]==0) ||
-               (tab->M[0][0]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[2][2]==jogadoria->tipo && tab->M[0][0]==0)){
+            if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==0) ||
+               (tab->M[0][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][0]==0)){
                 duplasIA++;
                 if (tab->M[0][0] == 0){ 
                     casasVazias[6][0] = 0; 
@@ -463,9 +463,9 @@ if (possiveisForks == 1){
                     casasVazias[6][1] = 2; 
                 }
             }
-            if((tab->M[0][2]==jogadoria->tipo && tab->M[1][1]==jogadoria->tipo && tab->M[2][0]==0) ||
-               (tab->M[0][2]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[1][1]==0) ||
-               (tab->M[1][1]==jogadoria->tipo && tab->M[2][0]==jogadoria->tipo && tab->M[0][2]==0)){
+            if((tab->M[0][2]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][0]==0) ||
+               (tab->M[0][2]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][1]==0) ||
+               (tab->M[1][1]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][2]==0)){
                 duplasIA++;
                 if (tab->M[0][2] == 0){ 
                     casasVazias[7][0] = 0; 
@@ -493,13 +493,13 @@ if (possiveisForks == 1){
                         continue; 
                     }
                     for (int l = 0; l < possiveisForks; l++){
-                        if (possiveisJogadas[m][0] == casasVazias[k][0] && possiveisJogadas[m][1] == casasVazias[k][1]){
+                        if (possiveisJogadas[l][0] == casasVazias[n][0] && possiveisJogadas[l][1] == casasVazias[n][1]){
                             taConflitano = 1;
                         }
                     }
                 }
                 if (!taConflitano){
-                    marcaJogada(tab,i,j,jogadoria->tipo); 
+                    marcaJogada(tab,i,j,jogadorIA->tipo); 
                     return;
                 }
             }

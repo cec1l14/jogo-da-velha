@@ -17,7 +17,7 @@ void configuraJogadores(int *modo, JogadorTeclado *humano1, JogadorTeclado *huma
 
     printf("1 - Humano vs Humano\n");
     printf("2 - Humano vs IA\n");
-    PRINTF("3 - Jogador remoto\n");
+    printf("3 - Jogador remoto\n");
     printf("Escolha o modo de jogo:\n");
     scanf("%d", modo);
 
