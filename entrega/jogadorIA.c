@@ -152,25 +152,17 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){
                 
                 marcaJogada(tab,i,j,jogadorIA->tipo);
                 duplasIA = 0;
-
-                if((tab->M[0][0] + tab->M[0][1] + tab->M[0][2]) == ((jogadorIA->tipo)*2)){
-                    duplasIA++;
+                
+                for(int k = 0; k < 3; k++){
+                    if((tab->M[k][0] + tab->M[k][1] + tab->M[k][2]) == ((jogadorIA->tipo)*2)){
+                        duplasIA++;
+                    }
                 }
-                if((tab->M[1][0] + tab->M[1][1] + tab->M[1][2]) == ((jogadorIA->tipo)*2)){
-                    duplasIA++;
-                }
-                if((tab->M[2][0] + tab->M[2][1] + tab->M[2][2]) == ((jogadorIA->tipo)*2)){
-                    duplasIA++;
-                }
-
-                if((tab->M[0][0] + tab->M[1][0] + tab->M[2][0]) == ((jogadorIA->tipo)*2)){
-                    duplasIA++;
-                }
-                if((tab->M[0][1] + tab->M[1][1] + tab->M[2][1]) == ((jogadorIA->tipo)*2)){
-                    duplasIA++;
-                }
-                if((tab->M[0][2] + tab->M[1][2] + tab->M[2][2]) == ((jogadorIA->tipo)*2)){
-                    duplasIA++;
+                
+                for(int l = 0; l < 3; l++){
+                    if((tab->M[0][l] + tab->M[1][l] + tab->M[2][l]) == ((jogadorIA->tipo)*2)){
+                        duplasIA++;
+                    }
                 }
 
                 if((tab->M[0][0] + tab->M[1][1] + tab->M[2][2]) == ((jogadorIA->tipo)*2)){
