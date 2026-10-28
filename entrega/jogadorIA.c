@@ -153,46 +153,31 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){
                 marcaJogada(tab,i,j,jogadorIA->tipo);
                 duplasIA = 0;
 
-                if((tab->M[0][0]==jogadorIA->tipo && tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==VAZIO) ||
-                (tab->M[0][0]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][1]==VAZIO) ||
-                (tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][0]==VAZIO)){
+                if((tab->M[0][0] + tab->M[0][1] + tab->M[0][2]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
-                if((tab->M[1][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[1][2]==VAZIO) ||
-                (tab->M[1][0]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[1][1]==VAZIO) ||
-                (tab->M[1][1]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[1][0]==VAZIO)){
+                if((tab->M[1][0] + tab->M[1][1] + tab->M[1][2]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
-                if((tab->M[2][0]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[2][2]==VAZIO) ||
-                (tab->M[2][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[2][1]==VAZIO) ||
-                (tab->M[2][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[2][0]==VAZIO)){
+                if((tab->M[2][0] + tab->M[2][1] + tab->M[2][2]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
 
-                if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==VAZIO) ||
-                (tab->M[0][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][0]==VAZIO) ||
-                (tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][0]==VAZIO)){
+                if((tab->M[0][0] + tab->M[1][0] + tab->M[2][0]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
-                if((tab->M[0][1]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][1]==VAZIO) ||
-                (tab->M[0][1]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[1][1]==VAZIO) ||
-                (tab->M[1][1]==jogadorIA->tipo && tab->M[2][1]==jogadorIA->tipo && tab->M[0][1]==VAZIO)){
+                if((tab->M[0][1] + tab->M[1][1] + tab->M[2][1]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
-                if((tab->M[0][2]==jogadorIA->tipo && tab->M[1][2]==jogadorIA->tipo && tab->M[2][2]==VAZIO) ||
-                (tab->M[0][2]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][2]==VAZIO) ||
-                (tab->M[1][2]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][2]==VAZIO)){
+                if((tab->M[0][2] + tab->M[1][2] + tab->M[2][2]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
 
-                if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==VAZIO) ||
-                (tab->M[0][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][1]==VAZIO) ||
-                (tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][0]==VAZIO)){
+                if((tab->M[0][0] + tab->M[1][1] + tab->M[2][2]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
-                if((tab->M[0][2]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][0]==VAZIO) ||
-                (tab->M[0][2]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][1]==VAZIO) ||
-                (tab->M[1][1]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][2]==VAZIO)){
+                
+                if((tab->M[0][2] + tab->M[1][1] + tab->M[2][0]) == ((jogadorIA->tipo)*2)){
                     duplasIA++;
                 }
 
@@ -200,7 +185,7 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){
                     return;
                 }
                 else {
-                    marcaJogada(tab,i,j,0);
+                    marcaJogada(tab,i,j,VAZIO);
                 }
             }
         }
