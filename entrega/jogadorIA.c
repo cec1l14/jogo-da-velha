@@ -143,31 +143,30 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){
     // R2. Se houver uma jogada que crie duas sequências de duas marcações, use-a. 
 
     int duplasIA;
- 
     for (int i = 0; i<3; i++){
-     
+    
         for (int j = 0; j<3; j++){
-     
+    
             if (tab->M[i][j] == VAZIO){
-     
+    
                 duplasIA = 0;
-     
+    
                 if((tab->M[i][0] + tab->M[i][1] + tab->M[i][2]) == jogadorIA->tipo){
                     duplasIA++;
                 }
-     
+
                 if((tab->M[0][j] + tab->M[1][j] + tab->M[2][j]) == jogadorIA->tipo){
                     duplasIA++;
                 }
-     
+
                 if(i == j && (tab->M[0][0] + tab->M[1][1] + tab->M[2][2]) == jogadorIA->tipo){
                     duplasIA++;
                 }
-     
+
                 if(i + j == 2 && (tab->M[0][2] + tab->M[1][1] + tab->M[2][0]) == jogadorIA->tipo){
                     duplasIA++;
                 }
-     
+
                 if(duplasIA >= 2){
                     marcaJogada(tab,i,j,jogadorIA->tipo);
                     return;
