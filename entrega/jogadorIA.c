@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "jogadorIA.h"
 
-void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jogadorTeclado já possui a função joga
+void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){
 
     int jogadorHumano;
 
@@ -32,9 +32,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
 
     for (i = 0; i < 3; i++) {
 
-        // parte IA
-        // verificação das linhas 
-
         if (tab->M[i][0] == jogadorIA->tipo && tab->M[i][1] == jogadorIA->tipo && tab->M[i][2] == VAZIO) {
             marcaJogada(tab, i, 2, jogadorIA->tipo);
             return;
@@ -47,8 +44,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
             marcaJogada(tab, i, 1, jogadorIA->tipo);
             return;
         }
-
-        // verificação das colunas
 
         if (tab->M[0][i] == jogadorIA->tipo && tab->M[1][i] == jogadorIA->tipo && tab->M[2][i] == VAZIO) {
             marcaJogada(tab, 2, i, jogadorIA->tipo);
@@ -64,8 +59,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
         }
     }
 
-    // verificação da diagonal principal
-
     if (tab->M[0][0] == jogadorIA->tipo && tab->M[1][1] == jogadorIA->tipo && tab->M[2][2] == VAZIO) {
         marcaJogada(tab, 2, 2, jogadorIA->tipo);
         return;
@@ -78,8 +71,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
         marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
-
-    // verificação da diagonal secundária
 
     if (tab->M[0][2] == jogadorIA->tipo && tab->M[1][1] == jogadorIA->tipo && tab->M[2][0] == VAZIO) {
         marcaJogada(tab, 2, 0, jogadorIA->tipo);
@@ -96,9 +87,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
 
     for (i = 0; i < 3; i++) {
 
-        // parte humano
-        // verificação das linhas
-
         if (tab->M[i][0] == jogadorHumano && tab->M[i][1] == jogadorHumano && tab->M[i][2] == VAZIO) {
             marcaJogada(tab, i, 2, jogadorIA->tipo);
             return;
@@ -111,8 +99,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
             marcaJogada(tab, i, 1, jogadorIA->tipo);
             return;
         }
-
-        // verificação das colunas
 
         if (tab->M[0][i] == jogadorHumano && tab->M[1][i] == jogadorHumano && tab->M[2][i] == VAZIO) {
             marcaJogada(tab, 2, i, jogadorIA->tipo);
@@ -128,8 +114,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
         }
     }
 
-    // verificação da diagonal principal
-
     if (tab->M[0][0] == jogadorHumano && tab->M[1][1] == jogadorHumano && tab->M[2][2] == VAZIO) {
         marcaJogada(tab, 2, 2, jogadorIA->tipo);
         return;
@@ -142,8 +126,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
         marcaJogada(tab, 1, 1, jogadorIA->tipo);
         return;
     }
-
-    // verificação da diagonal secundária
 
     if (tab->M[0][2] == jogadorHumano && tab->M[1][1] == jogadorHumano && tab->M[2][0] == VAZIO) {
         marcaJogada(tab, 2, 0, jogadorIA->tipo);
@@ -171,7 +153,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
                 marcaJogada(tab,i,j,jogadorIA->tipo);
                 duplasIA = 0;
 
-                // olhando linhas
                 if((tab->M[0][0]==jogadorIA->tipo && tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==VAZIO) ||
                 (tab->M[0][0]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][1]==VAZIO) ||
                 (tab->M[0][1]==jogadorIA->tipo && tab->M[0][2]==jogadorIA->tipo && tab->M[0][0]==VAZIO)){
@@ -188,7 +169,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
                     duplasIA++;
                 }
 
-                // olhando colunas
                 if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==VAZIO) ||
                 (tab->M[0][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[1][0]==VAZIO) ||
                 (tab->M[1][0]==jogadorIA->tipo && tab->M[2][0]==jogadorIA->tipo && tab->M[0][0]==VAZIO)){
@@ -205,7 +185,6 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
                     duplasIA++;
                 }
 
-                // olhando diagonais
                 if((tab->M[0][0]==jogadorIA->tipo && tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==VAZIO) ||
                 (tab->M[0][0]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[1][1]==VAZIO) ||
                 (tab->M[1][1]==jogadorIA->tipo && tab->M[2][2]==jogadorIA->tipo && tab->M[0][0]==VAZIO)){
@@ -226,6 +205,7 @@ void jogaIA(Tabuleiro *tab, JogadorIA *jogadorIA){ // colocando jogaIA, pois jog
             }
         }
     }
+    
     // R3. Se o quadrado central estiver livre, marque-o.
 
     if(tab->M[1][1] == VAZIO){
