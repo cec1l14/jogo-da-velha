@@ -26,6 +26,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
         jogadorHumano = 1;
     }
 
+    // R1. Se você ou seu oponente tiver duas marcações em sequência, marque o quadrado restante.
+
     int i;
 
     for (i = 0; i < 3; i++) {
@@ -138,6 +140,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
         return;
     }
 
+    // R2. Se houver uma jogada que crie duas sequências de duas marcações, use-a. 
+
     int duplasIA;
     for (int i = 0; i<3; i++){
     
@@ -170,13 +174,15 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
             }
         }
     }
-
+    
+    // R3. Se o quadrado central estiver livre, marque-o.
 
     if(tab->M[1][1] == VAZIO){
         marcaJogada(tab, 1, 1, ia->tipo);
         return;
     }
     
+    // R4: Se seu oponente tiver marcado um dos cantos, marque o canto oposto
     
     int cantos_linha, cantos_coluna, opostos_linha, opostos_coluna;
     
@@ -204,6 +210,7 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
         }
     }
 
+    // R5: Se houver um canto vazio, marque-o.
     
     for (int i = 0; i < 4; i++) {
         int cantos_linha = cantos[i][0];
@@ -213,6 +220,8 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
             return;
         }
     }
+
+    // R6:  Marque arbitrariamente um quadrado vazio
 
     for (int linha = 0; linha < 3; linha++) {
         for (int coluna = 0; coluna < 3; coluna++) {
