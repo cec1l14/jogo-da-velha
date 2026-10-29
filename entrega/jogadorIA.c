@@ -232,3 +232,18 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
         }
     }
 }
+
+/*
+void jogaIA() {
+    if (r1()) {
+        return;
+    
+    if (r1()) {
+    return;
+}
+
+bool r1() {
+    // Checar se jogada aconteceu - true
+    // return false
+}
+    */

@@ -71,3 +71,8 @@ gcc *.c -o jogo.exe
 |---|---|---|
 | <img src="https://github.com/cec1l14.png" width="40"> | Cecília Candeia | [@cec1l14](https://github.com/cec1l14) |
 | <img src="https://github.com/techteus.png" width="40"> | Matheus Fernandes | [@techteus](https://github.com/techteus) |
+
+## mudanças sugeridas pelo professor
+
+- colocar os números de linhas e colunas no tabuleiro
+- modularizar em diferentes funções
