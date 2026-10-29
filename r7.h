@@ -4,6 +4,6 @@
 #include "entrega/jogadorIA.h"
 #include "entrega/jogadorTeclado.h"
 
-int regraExtra(Tabuleiro *tab, int ia, int adversario);
+void regraExtra(Tabuleiro *tab, int ia, int adversario);
 
 #endif

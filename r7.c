@@ -4,7 +4,7 @@
 
 #include "r7.h"
 
-int regraExtra(Tabuleiro *tab, int ia, int adversario){
+void regraExtra(Tabuleiro *tab, int ia, int adversario){
     
     int possiveisJogadas[8][2];
     int duplasIA, duplasHumano;
@@ -154,7 +154,6 @@ int regraExtra(Tabuleiro *tab, int ia, int adversario){
                         }
                         if (!taConflitano){
                             marcaJogada(tab,i,j,ia);
-                            return 1;
                         }
                     }
                 }
