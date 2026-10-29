@@ -91,7 +91,7 @@ int regraExtra(Tabuleiro *tab, int ia, int adversario){
  
                         if (tab->M[0][j] == VAZIO){
                             casasVazias[j+3][0] = 0;
-                            casasVazias[j+3][1] = j;      /
+                            casasVazias[j+3][1] = j;      
                         }
                         if (tab->M[1][j] == VAZIO){
                             casasVazias[j+3][0] = 1;
