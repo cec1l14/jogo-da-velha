@@ -85,11 +85,9 @@ void inicia(Tabuleiro *tab, int modo, JogadorTeclado *humano1, JogadorTeclado *h
         vez++;
     }
 
-    if(vencedor == O){
-        printf("Jogador O venceu!\n");
-    } else if(vencedor == X){
-        printf("Jogador X venceu!\n");
+    if(vencedor == EMPATE){
+    printf("Empate!\n");
     } else {
-        printf("Empate!\n");
-    }
+    printf("Jogador %c venceu!\n", conversao(vencedor));
+}
 }
