@@ -2,7 +2,7 @@
  * Implementação do módulo: jogadorIA
  * Autores: Cecília Candeia e Matheus Fernandes
  * Data de Criação: 23/10/2026
- * Última alteração: 28/10/2026
+ * Última alteração: 30/10/2026
  * Descrição Geral: jogador controlado pelo computador. A função jogaIA()
  *   aplica seis regras, testadas na ordem, e encerra o turno na primeira que
  *   resultar em jogada: R1 (completa a própria sequência de duas peças ou
@@ -15,133 +15,126 @@
 #include <stdio.h>
 #include "jogadorIA.h"
 
-void jogaIA(Tabuleiro *tab, JogadorIA *ia){
+// R1. Se você ou seu oponente tiver duas marcações em sequência, marque o quadrado restante.
 
-    int jogadorHumano;
-
-    if (ia->tipo == 1)
-    {
-        jogadorHumano = 4;
-    } else {
-        jogadorHumano = 1;
-    }
-
-    // R1. Se você ou seu oponente tiver duas marcações em sequência, marque o quadrado restante.
-
+int r1(Tabuleiro *tab, JogadorIA *ia, int jogadorHumano){
     int i;
 
     for (i = 0; i < 3; i++) {
 
         if (tab->M[i][0] == ia->tipo && tab->M[i][1] == ia->tipo && tab->M[i][2] == VAZIO) {
             marcaJogada(tab, i, 2, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[i][1] == ia->tipo && tab->M[i][2] == ia->tipo && tab->M[i][0] == VAZIO) {
             marcaJogada(tab, i, 0, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[i][0] == ia->tipo && tab->M[i][2] == ia->tipo && tab->M[i][1] == VAZIO) {
             marcaJogada(tab, i, 1, ia->tipo);
-            return;
+            return 1;
         }
 
         if (tab->M[0][i] == ia->tipo && tab->M[1][i] == ia->tipo && tab->M[2][i] == VAZIO) {
             marcaJogada(tab, 2, i, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[1][i] == ia->tipo && tab->M[2][i] == ia->tipo && tab->M[0][i] == VAZIO) {
             marcaJogada(tab, 0, i, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[0][i] == ia->tipo && tab->M[2][i] == ia->tipo && tab->M[1][i] == VAZIO) {
             marcaJogada(tab, 1, i, ia->tipo);
-            return;
+            return 1;
         }
     }
 
     if (tab->M[0][0] == ia->tipo && tab->M[1][1] == ia->tipo && tab->M[2][2] == VAZIO) {
         marcaJogada(tab, 2, 2, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[1][1] == ia->tipo && tab->M[2][2] == ia->tipo && tab->M[0][0] == VAZIO) {
         marcaJogada(tab, 0, 0, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[0][0] == ia->tipo && tab->M[2][2] == ia->tipo && tab->M[1][1] == VAZIO) {
         marcaJogada(tab, 1, 1, ia->tipo);
-        return;
+        return 1;
     }
 
     if (tab->M[0][2] == ia->tipo && tab->M[1][1] == ia->tipo && tab->M[2][0] == VAZIO) {
         marcaJogada(tab, 2, 0, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[1][1] == ia->tipo && tab->M[2][0] == ia->tipo && tab->M[0][2] == VAZIO) {
         marcaJogada(tab, 0, 2, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[0][2] == ia->tipo && tab->M[2][0] == ia->tipo && tab->M[1][1] == VAZIO) {
         marcaJogada(tab, 1, 1, ia->tipo);
-        return;
+        return 1;
     }
 
     for (i = 0; i < 3; i++) {
 
         if (tab->M[i][0] == jogadorHumano && tab->M[i][1] == jogadorHumano && tab->M[i][2] == VAZIO) {
             marcaJogada(tab, i, 2, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[i][1] == jogadorHumano && tab->M[i][2] == jogadorHumano && tab->M[i][0] == VAZIO) {
             marcaJogada(tab, i, 0, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[i][0] == jogadorHumano && tab->M[i][2] == jogadorHumano && tab->M[i][1] == VAZIO) {
             marcaJogada(tab, i, 1, ia->tipo);
-            return;
+            return 1;
         }
 
         if (tab->M[0][i] == jogadorHumano && tab->M[1][i] == jogadorHumano && tab->M[2][i] == VAZIO) {
             marcaJogada(tab, 2, i, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[1][i] == jogadorHumano && tab->M[2][i] == jogadorHumano && tab->M[0][i] == VAZIO) {
             marcaJogada(tab, 0, i, ia->tipo);
-            return;
+            return 1;
         }
         if (tab->M[0][i] == jogadorHumano && tab->M[2][i] == jogadorHumano && tab->M[1][i] == VAZIO) {
             marcaJogada(tab, 1, i, ia->tipo);
-            return;
+            return 1;
         }
     }
 
     if (tab->M[0][0] == jogadorHumano && tab->M[1][1] == jogadorHumano && tab->M[2][2] == VAZIO) {
         marcaJogada(tab, 2, 2, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[1][1] == jogadorHumano && tab->M[2][2] == jogadorHumano && tab->M[0][0] == VAZIO) {
         marcaJogada(tab, 0, 0, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[0][0] == jogadorHumano && tab->M[2][2] == jogadorHumano && tab->M[1][1] == VAZIO) {
         marcaJogada(tab, 1, 1, ia->tipo);
-        return;
+        return 1;
     }
 
     if (tab->M[0][2] == jogadorHumano && tab->M[1][1] == jogadorHumano && tab->M[2][0] == VAZIO) {
         marcaJogada(tab, 2, 0, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[1][1] == jogadorHumano && tab->M[2][0] == jogadorHumano && tab->M[0][2] == VAZIO) {
         marcaJogada(tab, 0, 2, ia->tipo);
-        return;
+        return 1;
     }
     if (tab->M[0][2] == jogadorHumano && tab->M[2][0] == jogadorHumano && tab->M[1][1] == VAZIO) {
         marcaJogada(tab, 1, 1, ia->tipo);
-        return;
+        return 1;
     }
+    return 0;
+}
 
-    // R2. Se houver uma jogada que crie duas sequências de duas marcações, use-a. 
+// R2. Se houver uma jogada que crie duas sequências de duas marcações, use-a. 
 
+int r2(Tabuleiro *tab, JogadorIA *ia){
     int duplasIA;
     for (int i = 0; i<3; i++){
     
@@ -169,20 +162,27 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
 
                 if(duplasIA >= 2){
                     marcaJogada(tab,i,j,ia->tipo);
-                    return;
+                    return 1;
                 }
             }
         }
     }
-    
-    // R3. Se o quadrado central estiver livre, marque-o.
+    return 0;
+} 
 
+// R3. Se o quadrado central estiver livre, marque-o.
+
+int r3(Tabuleiro *tab, JogadorIA *ia){
     if(tab->M[1][1] == VAZIO){
         marcaJogada(tab, 1, 1, ia->tipo);
-        return;
+        return 1;
     }
-    
-    // R4: Se seu oponente tiver marcado um dos cantos, marque o canto oposto
+    return 0;
+}
+
+// R4: Se seu oponente tiver marcado um dos cantos, marque o canto oposto
+
+int r4(Tabuleiro *tab, JogadorIA *ia, int jogadorHumano){
     
     int cantos_linha, cantos_coluna, opostos_linha, opostos_coluna;
     
@@ -206,44 +206,56 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
 
         if (tab->M[cantos_linha][cantos_coluna] == jogadorHumano && tab->M[opostos_linha][opostos_coluna] == VAZIO) {
             marcaJogada(tab, opostos_linha, opostos_coluna, ia->tipo);
-            return; 
+            return 1; 
         }
     }
+    return 0;
+}
 
-    // R5: Se houver um canto vazio, marque-o.
-    
+// R5: Se houver um canto vazio, marque-o.
+
+int r5(Tabuleiro *tab, JogadorIA *ia){
+    int cantos[4][2] = {{0, 0}, {0, 2}, {2, 2}, {2, 0}};
+
     for (int i = 0; i < 4; i++) {
         int cantos_linha = cantos[i][0];
         int cantos_coluna = cantos[i][1];
         if (tab->M[cantos_linha][cantos_coluna] == VAZIO) {
             marcaJogada(tab, cantos_linha, cantos_coluna, ia->tipo);
-            return;
+            return 1;
         }
     }
+    return 0;
+}
 
-    // R6:  Marque arbitrariamente um quadrado vazio
+// R6:  Marque arbitrariamente um quadrado vazio
 
+int r6(Tabuleiro *tab, JogadorIA *ia){
     for (int linha = 0; linha < 3; linha++) {
         for (int coluna = 0; coluna < 3; coluna++) {
             if (tab->M[linha][coluna] == VAZIO) {
                 marcaJogada(tab, linha, coluna, ia->tipo);
-                return;
+                return 1;
             }
         }
     }
+    return 0;
 }
 
-/*
-void jogaIA() {
-    if (r1()) {
-        return;
-    
-    if (r1()) {
-    return;
-}
+void jogaIA(Tabuleiro *tab, JogadorIA *ia){
 
-bool r1() {
-    // Checar se jogada aconteceu - true
-    // return false
+    int jogadorHumano;
+
+    if (ia->tipo == O)
+    {
+        jogadorHumano = X;
+    } else {
+        jogadorHumano = O;
+    }
+    if(r1(tab, ia, jogadorHumano)) return;
+    if(r2(tab, ia))                return;
+    if(r3(tab, ia))                return;
+    if(r4(tab, ia, jogadorHumano)) return;
+    if(r5(tab, ia))                return;
+    if(r6(tab, ia))                return;
 }
-    */

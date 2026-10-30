@@ -2,7 +2,7 @@
  * Implementação do módulo: tabuleiro
  * Autores: Cecília Candeia e Matheus Fernandes
  * Data de Criação: 19/10/2026
- * Última alteração: 26/10/2026
+ * Última alteração: 30/10/2026
  * Descrição Geral: representa o tabuleiro do jogo da velha como uma matriz 3x3
  *   de inteiros (0 = casa vazia, 1 = O, 4 = X). Oferece funções para zerar o
  *   tabuleiro, converter um valor no caractere exibido, desenhar o estado atual
@@ -40,8 +40,10 @@ void desenha(Tabuleiro *tab){
     int i,j;
 
     printf("\033[2J\033[H"); 
+    printf("  0   1   2\n");
 
     for(i=0; i<3; i++){
+        printf("%d", i);
         for(j=0; j<3; j++){
             printf(" %c ", conversao(tab->M[i][j]));
             if(j<2){
@@ -50,7 +52,7 @@ void desenha(Tabuleiro *tab){
         }
         printf("\n");
         if(i<2){
-            printf("-----------\n");
+            printf(" -----------\n");
         }
     }
 

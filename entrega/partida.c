@@ -2,7 +2,7 @@
  * Implementação do módulo: partida
  * Autores: Cecília Candeia e Matheus Fernandes
  * Data de Criação: 19/10/2026
- * Última alteração: 26/10/2026
+ * Última alteração: 30/10/2026
  * Descrição Geral: controla o jogo. configuraJogadores() pergunta o modo
  *   (humano contra humano ou humano contra IA) e o símbolo do jogador 1; o
  *   segundo jogador recebe o símbolo oposto. inicia() zera o tabuleiro e repete
@@ -17,11 +17,12 @@ void configuraJogadores(int *modo, JogadorTeclado *humano1, JogadorTeclado *huma
 
     printf("1 - Humano vs Humano\n");
     printf("2 - Humano vs IA\n");
+    printf("3 - Jogo Remoto\n");
     printf("Escolha o modo de jogo:\n");
     scanf("%d", modo);
 
-    while(*modo != MODO_HUMANO_VS_HUMANO && *modo != MODO_HUMANO_VS_IA){
-        printf("Escolha invalida (selecione 1 para Humano vs Humano e 2 para Humano vs IA): ");
+    while(*modo != MODO_HUMANO_VS_HUMANO && *modo != MODO_HUMANO_VS_IA && *modo != MODO_REMOTO){
+        printf("Escolha invalida (selecione 1 para Humano vs Humano, 2 para Humano vs IA ou 3 para Jogo Remoto): ");
         scanf("%d", modo);
     }
 
