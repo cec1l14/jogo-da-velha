@@ -22,7 +22,7 @@ int main(){
 
     printf("IP do servidor: ");
     scanf("%31s", ip);
-    conecta(&remoto, ip, PORTA);
+    conecta(&remoto, ip);
 
     inicializaTabuleiro(&tab);
     desenha(&tab);

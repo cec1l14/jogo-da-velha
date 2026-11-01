@@ -67,7 +67,7 @@ cd jogo-da-velha/entrega
 ```
 
 ```bash
-gcc *.c -o jogo.exe
+gcc jogadorTeclado.c jogadorIA.c main.c partida.c tabuleiro.c -o jogo.exe
 ```
 
 ```bash
@@ -97,9 +97,9 @@ gcc mainCliente.c jogadorRemoto.c jogadorTeclado.c tabuleiro.c -o cliente.exe -l
 3. No terminal referente ao cliente, coloca-se:
 
 ```bash
-\.cliente.exe
+.\cliente.exe
 ```
-`Aparecerá uma mensagem do tipo 'IP do cliente'.`
+`Aparecerá uma mensagem do tipo 'IP do servidor'.`
 
 ## Integrantes
 

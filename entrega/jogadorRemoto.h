@@ -12,8 +12,8 @@ typedef struct {
     SOCKET sock;  
 } JogadorRemoto;
 
-void conecta(JogadorRemoto *remoto, const char *ip, int porta);
-void aceita(JogadorRemoto *remoto, int porta);
+void conecta(JogadorRemoto *remoto, const char *ip);
+void aceita(JogadorRemoto *remoto);
 void jogaRemoto(Tabuleiro *tab, JogadorRemoto *remoto);
 void enviaJogada(JogadorRemoto *remoto, int linha, int coluna);
 

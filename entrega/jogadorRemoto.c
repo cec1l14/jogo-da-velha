@@ -13,7 +13,7 @@
 
 //  tenta conectar o cliente ao servidor
 
-void conecta(JogadorRemoto *remoto, const char *ip, int porta) {
+void conecta(JogadorRemoto *remoto, const char *ip) {
     WSADATA wsa;
     WSAStartup(MAKEWORD(2, 2), &wsa);
 
@@ -45,7 +45,7 @@ void conecta(JogadorRemoto *remoto, const char *ip, int porta) {
 
 // servidor espera o cliente chegar p aceitar 
 
-void aceita(JogadorRemoto *remoto, int porta) {
+void aceita(JogadorRemoto *remoto) {
     WSADATA wsa;
     WSAStartup(MAKEWORD(2, 2), &wsa);
     

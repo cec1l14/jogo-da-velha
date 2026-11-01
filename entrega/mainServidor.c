@@ -21,7 +21,7 @@ int main(){
     humano.tipo = X;             
     remoto.tipo = O;
 
-    aceita(&remoto, PORTA); 
+    aceita(&remoto); 
 
     inicializaTabuleiro(&tab);
     desenha(&tab);
