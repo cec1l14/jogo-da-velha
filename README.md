@@ -10,19 +10,25 @@ Em suma, o projeto está dividido em três implementações básicas:
 ### Estrutura do projeto
 
 ```
+### Estrutura do projeto
+
+```
 jogo-da-velha/
 ├── README.md
 ├── LICENSE
-├── .gitignore 
-├── entrega/              
-│   ├── main.c / mainCliente.c / mainServidor.c
+├── .gitignore
+├── entrega/
+│   ├── main.c                              
+│   ├── mainServidor.c                      
+│   ├── mainCliente.c                       
 │   ├── partida.c / partida.h
 │   ├── tabuleiro.c / tabuleiro.h
 │   ├── jogadorTeclado.c / jogadorTeclado.h
 │   ├── jogadorIA.c / jogadorIA.h
-│   ├── jogadorRemoto.c / jogadorRemoto.h
-├── terminal/
-    ├── index.html
+│   └── jogadorRemoto.c / jogadorRemoto.h
+└── terminal/
+    └── index.html                          
+```
 
 ```
 ### Simulador no navegador
