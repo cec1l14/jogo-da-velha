@@ -418,4 +418,5 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
     if(r4(tab, ia, jogadorHumano)) return;
     if(r5(tab, ia))                return;
     if(r6(tab, ia))                return;
+    if(regraExtra(tab, ia->tipo, jogadorHumano)) return;
 }
