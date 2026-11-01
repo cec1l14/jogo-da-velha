@@ -17,6 +17,9 @@ int main(){
     int modo; 
 
     configuraJogadores(&modo, &humano1, &humano2, &ia);
+    if (modo == MODO_REMOTO) {
+        return 0; // para não entrar na função inicia quando o modo for remoto
+    }
     inicia(&tab, modo, &humano1, &humano2, &ia);
 
     return 0;
