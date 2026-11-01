@@ -12,6 +12,9 @@
 #include "jogadorRemoto.h"
 
 //  tenta conectar o cliente ao servidor
+void jogaRemoto(Tabuleiro *tab, JogadorRemoto *remoto){
+
+}
 void conecta(JogadorRemoto *remoto, const char *ip) {
 
     remoto->sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -77,4 +80,13 @@ void aceita(JogadorRemoto *remoto) {
 
     closesocket(servidorSock);
     printf("Cliente conectado!\n");
+}
+void enviaJogada(JogadorRemoto *remoto, int linha, int coluna){
+    char buffer[TAM_BUFFER];
+
+    buffer[0] = linha + '0';
+    buffer[1] = coluna + '0';
+    buffer[2] = '\0';
+
+    send(remoto->sock, buffer, strlen(buffer) + 1, 0);
 }
