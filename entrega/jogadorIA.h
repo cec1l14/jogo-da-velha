@@ -12,6 +12,7 @@ int r3(Tabuleiro *tab, JogadorIA *ia);
 int r4(Tabuleiro *tab, JogadorIA *ia, int jogadorHumano);
 int r5(Tabuleiro *tab, JogadorIA *ia);
 int r6(Tabuleiro *tab, JogadorIA *ia);
+int regraExtra(Tabuleiro *tab, int ia, int adversario);
 void jogaIA(Tabuleiro *tab, JogadorIA *ia);
 
 #endif
