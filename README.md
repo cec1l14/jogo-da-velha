@@ -26,8 +26,6 @@ jogo-da-velha/
 └── terminal/
     └── index.html                          
 ```
-
-```
 ### Simulador no navegador
 
 Dá para testar o `jogo.exe`, o `servidor.exe` e o `cliente.exe` sem compilar nada: o simulador reproduz a saída dos programas em C em dois terminais. Abra [o simulador de terminal](https://terminal-nu-six.vercel.app/) e digite os comandos.
