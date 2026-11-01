@@ -393,6 +393,7 @@ int regraExtra(Tabuleiro *tab, int ia, int adversario){
                         }
                         if (!taConflitano){
                             marcaJogada(tab,i,j,ia);
+                            return 1;
                         }
                     }
                 }
@@ -413,10 +414,10 @@ void jogaIA(Tabuleiro *tab, JogadorIA *ia){
         jogadorHumano = O;
     }
     if(r1(tab, ia, jogadorHumano)) return;
+    if(regraExtra(tab, ia->tipo, jogadorHumano)) return;
     if(r2(tab, ia))                return;
     if(r3(tab, ia))                return;
     if(r4(tab, ia, jogadorHumano)) return;
     if(r5(tab, ia))                return;
     if(r6(tab, ia))                return;
-    if(regraExtra(tab, ia->tipo, jogadorHumano)) return;
 }

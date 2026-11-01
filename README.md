@@ -10,9 +10,6 @@ Em suma, o projeto está dividido em três implementações básicas:
 ### Estrutura do projeto
 
 ```
-### Estrutura do projeto
-
-```
 jogo-da-velha/
 ├── README.md
 ├── LICENSE
@@ -55,6 +52,7 @@ Partida entre um **jogador humano** (teclado) e um **jogador IA**, na mesma máq
 | R4 | Se seu oponente tiver marcado um dos cantos, marque o canto oposto. |
 | R5 | Se houver um canto vazio, marque-o. |
 | R6 | Marque arbitrariamente um quadrado vazio. |
+|Regra extra | Bloqueia a jogada que criaria duas sequências de duas marcações para o oponente. |
 
 ### Módulo Jogador Remoto
 
