@@ -15,15 +15,13 @@ jogo-da-velha/
 ├── LICENSE
 ├── .gitignore 
 ├── entrega/              
-│   ├── main.c
+│   ├── main.c / mainCliente.c / mainServidor.c
 │   ├── partida.c / partida.h
 │   ├── tabuleiro.c / tabuleiro.h
 │   ├── jogadorTeclado.c / jogadorTeclado.h
 │   └── jogadorIA.c / jogadorIA.h
-├── modulo1/              
-├── modulo2/             
-├── modulo3/              
-├── r7.c / r7.h           
+│   └── jogadorRemoto.c / jogadorRemoto.h
+
 ```
 
 ### Módulo Jogo de Tabuleiro
@@ -55,15 +53,334 @@ Partida entre um **jogador humano local** e um **jogador remoto**, que roda em o
 git clone https://github.com/cec1l14/jogo-da-velha.git
 ```
 
-**Como compilar**
+**Como compilar (Módulos 1 2)**
 
 ```bash
-cd jogo-da-vea/entrega
+cd jogo-da-velha/entrega
 ```
 
 ```bash
 gcc *.c -o jogo.exe
 ```
+
+```bash
+.\jogo.exe
+```
+
+**Como compilar (Módulo 3)**
+
+1. Em cada terminal devem ser rodados:
+
+```bash
+gcc mainServidor.c jogadorRemoto.c jogadorTeclado.c tabuleiro.c -o servidor.exe -lws2_32
+```
+
+```bash
+gcc mainCliente.c jogadorRemoto.c jogadorTeclado.c tabuleiro.c -o cliente.exe -lws2_32
+```
+
+2. No terminal referente ao servidor, deve ser posto: 
+
+```bash
+.\servidor.exe
+```
+
+`Aparecerá uma mensagem do tipo 'Servidor aguardando conexao'.`
+
+3. No terminal referente ao cliente, coloca-se:
+
+```bash
+\.cliente.exe
+```
+`Aparecerá uma mensagem do tipo 'IP do cliente'.`
+
+#### Exemplo de partida remota
+
+Cada jogada aparece **nos dois computadores**, e os dois tabuleiros ficam sempre iguais. Na partida abaixo, o servidor (`X`) joga primeiro, e o cliente (`O`) vence pela diagonal.
+
+**Resultado final, como cada janela mostra:**
+
+<table>
+<tr>
+<th>Servidor (X)</th>
+<th>Cliente (O)</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1 X | O |   
+ -----------
+2   |   | O 
+Jogador O venceu!
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1 X | O |   
+ -----------
+2   |   | O 
+Jogador O venceu!
+```
+
+</td>
+</tr>
+</table>
+
+<details>
+<summary>Ver a partida passo a passo</summary>
+
+**Conexão.** O servidor abre a porta e espera. O cliente informa o IP e conecta.
+
+<table>
+<tr>
+<th>Servidor (X)</th>
+<th>Cliente (O)</th>
+</tr>
+<tr>
+<td>
+
+```text
+$ servidor.exe
+Servidor aguardando conexao na porta 1313...
+Cliente conectado!
+```
+
+</td>
+<td>
+
+```text
+$ cliente.exe
+IP do servidor: 127.0.0.1
+Conectado ao servidor!
+```
+
+</td>
+</tr>
+</table>
+
+**Jogada 1.** O servidor joga `X` na linha 0, coluna 1 e envia a jogada. O cliente a recebe e marca no seu tabuleiro.
+
+<table>
+<tr>
+<th>Servidor (X): digitou 0 e 1</th>
+<th>Cliente (O): recebeu 0 e 1</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0   | X |   
+ -----------
+1   |   |   
+ -----------
+2   |   |   
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0   | X |   
+ -----------
+1   |   |   
+ -----------
+2   |   |   
+```
+
+</td>
+</tr>
+</table>
+
+**Jogada 2.** Agora é a vez do cliente: `O` na linha 0, coluna 0.
+
+<table>
+<tr>
+<th>Servidor (X): recebeu 0 e 0</th>
+<th>Cliente (O): digitou 0 e 0</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0 O | X |   
+ -----------
+1   |   |   
+ -----------
+2   |   |   
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0 O | X |   
+ -----------
+1   |   |   
+ -----------
+2   |   |   
+```
+
+</td>
+</tr>
+</table>
+
+**Jogada 3.** Servidor: `X` na linha 0, coluna 2.
+
+<table>
+<tr>
+<th>Servidor (X): digitou 0 e 2</th>
+<th>Cliente (O): recebeu 0 e 2</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1   |   |   
+ -----------
+2   |   |   
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1   |   |   
+ -----------
+2   |   |   
+```
+
+</td>
+</tr>
+</table>
+
+**Jogada 4.** Cliente: `O` no centro (linha 1, coluna 1).
+
+<table>
+<tr>
+<th>Servidor (X): recebeu 1 e 1</th>
+<th>Cliente (O): digitou 1 e 1</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1   | O |   
+ -----------
+2   |   |   
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1   | O |   
+ -----------
+2   |   |   
+```
+
+</td>
+</tr>
+</table>
+
+**Jogada 5.** Servidor: `X` na linha 1, coluna 0.
+
+<table>
+<tr>
+<th>Servidor (X): digitou 1 e 0</th>
+<th>Cliente (O): recebeu 1 e 0</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1 X | O |   
+ -----------
+2   |   |   
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1 X | O |   
+ -----------
+2   |   |   
+```
+
+</td>
+</tr>
+</table>
+
+**Jogada 6.** Cliente: `O` na linha 2, coluna 2. Completa a diagonal, e os dois lados anunciam a vitória.
+
+<table>
+<tr>
+<th>Servidor (X): recebeu 2 e 2</th>
+<th>Cliente (O): digitou 2 e 2</th>
+</tr>
+<tr>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1 X | O |   
+ -----------
+2   |   | O 
+Jogador O venceu!
+```
+
+</td>
+<td>
+
+```text
+  0   1   2
+0 O | X | X 
+ -----------
+1 X | O |   
+ -----------
+2   |   | O 
+Jogador O venceu!
+```
+
+</td>
+</tr>
+</table>
+
+</details>
+
 
 ## Integrantes
 
