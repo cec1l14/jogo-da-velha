@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Terminal Jogo da Velha</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: página clara ou escura ao redor; terminais sempre escuros, como o console do Windows.
+   Abas: jogo local (um terminal) e servidor x cliente (dois terminais com a conexão no meio). */
+:root{
+  --bg:#edf1f1; --surface:#ffffff; --fg:#14201f; --muted:#546664; --line:#d2dcdb;
+  --accent:#0a6e6a; --accent-fg:#ffffff; --accent-soft:#d8eeec; --warn:#a4470a;
+  --t-bg:#0c0c0c; --t-fg:#cccccc; --t-dim:#7b7b7b; --t-bar:#1c1f20; --t-line:#2b2f30; --t-accent:#4aa3e0; --t-ok:#5fc27a; --t-wait:#e3b341;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono","Cascadia Mono",Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1415; --surface:#151d1e; --fg:#e3ebe9; --muted:#8fa3a0; --line:#27353a;
+    --accent:#46c7bc; --accent-fg:#052321; --accent-soft:#17312f; --warn:#f0a35e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1415; --surface:#151d1e; --fg:#e3ebe9; --muted:#8fa3a0; --line:#27353a;
+  --accent:#46c7bc; --accent-fg:#052321; --accent-soft:#17312f; --warn:#f0a35e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;
+  background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:16px; line-height:1.5;
+  padding-block:28px 40px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap{max-width:1280px; margin:0 auto}
+
+.tabs{display:flex; gap:6px; margin:22px 0 16px; flex-wrap:wrap}
+.tab{
+  font:inherit; font-weight:500; color:var(--muted); background:transparent; border:1px solid var(--line);
+  padding:8px 14px; border-radius:8px; cursor:pointer;
+}
+.tab[aria-selected="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-fg)}
+
+.panel{display:grid; gap:18px}
+.local{grid-template-columns:minmax(0,980px); justify-content:center}
+.remote{grid-template-columns:minmax(0,1fr) 11rem minmax(0,1fr); align-items:start}
+@media (max-width:860px){ .remote{grid-template-columns:minmax(0,1fr)} }
+
+
+/* terminal */
+.term{background:var(--t-bg); color:var(--t-fg); border:1px solid var(--t-line); border-radius:10px; overflow:hidden; min-width:0}
+.term:focus-within{border-color:var(--t-accent)}
+.bar{display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--t-bar); border-bottom:1px solid var(--t-line); min-height:40px}
+.dots{display:flex; gap:6px}
+.dots i{width:10px; height:10px; border-radius:50%; background:#4a4f51; display:block}
+.bar-title{font-family:var(--mono); font-size:.78rem; color:var(--t-dim); flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.status{flex:0 1 auto; min-width:0; max-width:60%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:.75rem; font-family:var(--sans); padding:2px 9px; border-radius:99px; border:1px solid var(--t-line); color:var(--t-dim); display:inline-flex; align-items:center; gap:6px}
+.status[hidden]{display:none}
+.status::before{content:""; width:7px; height:7px; border-radius:50%; background:currentColor}
+.status.wait{color:var(--t-wait)}
+.status.wait::before{animation:pulse 1.2s ease-in-out infinite}
+.status.go{color:var(--t-ok)}
+.ghost{font:inherit; font-size:.75rem; color:var(--t-dim); background:transparent; border:1px solid var(--t-line); border-radius:6px; padding:2px 9px; cursor:pointer}
+.ghost:hover{color:var(--t-fg); border-color:var(--t-dim)}
+.body{height:clamp(22rem, calc(100vh - 9rem), 44rem); overflow:auto; padding:12px 14px; font-family:var(--mono); font-size:.88rem; line-height:1.4; cursor:text; overscroll-behavior:contain}
+.out{margin:0; font:inherit; white-space:pre-wrap; overflow-wrap:anywhere}
+.line{display:flex; align-items:baseline; min-height:1.4em}
+.prompt{white-space:pre; flex:none}
+.in{flex:1; min-width:3ch; background:transparent; border:0; outline:0; color:inherit; font:inherit; padding:0; margin:0; caret-color:var(--t-fg)}
+.in[readonly]{caret-color:transparent}
+@keyframes pulse{50%{opacity:.25}}
+
+
+
+/* conexão */
+.link .state{justify-self:center; font-size:.8rem; padding:2px 10px; border-radius:99px; border:1px solid var(--line); color:var(--muted)}
+.link .state.on{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+.link .state.wait{color:var(--warn); border-color:var(--warn)}
+.track{position:relative; height:2.4rem; border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); margin:4px 0}
+.pkt{position:absolute; top:50%; padding:2px 9px; border-radius:99px; background:var(--accent); color:var(--accent-fg); font-family:var(--mono); font-size:.8rem; white-space:nowrap; animation:fly .7s linear forwards}
+.pkt.c2s{animation-name:flyback}
+@keyframes fly{from{left:0; transform:translate(0,-50%)} to{left:100%; transform:translate(-100%,-50%)}}
+@keyframes flyback{from{left:100%; transform:translate(-100%,-50%)} to{left:0; transform:translate(0,-50%)}}
+.msglog{list-style:none; margin:0; padding:0; display:grid; gap:6px; text-align:left; font-size:.8rem; min-height:4rem}
+.msglog li{display:grid; gap:1px; padding:6px 8px; background:var(--bg); border-radius:6px; border:1px solid var(--line)}
+.msglog .dir{color:var(--muted)}
+.msglog code{color:var(--fg)}
+.msglog .empty{color:var(--muted); background:transparent; border-style:dashed}
+
+
+@media (prefers-reduced-motion: reduce){
+  .pkt{animation:none; left:50%; transform:translate(-50%,-50%)}
+  .status.wait::before{animation:none}
+}
+.tab:focus-visible,.ghost:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+code{font-family:var(--mono); font-size:.9em}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px 16px; min-width:0}
+.link{display:grid; grid-template-columns:minmax(0,1fr); gap:10px; justify-items:stretch; text-align:center; align-content:start}
+.link .port{font-family:var(--mono); font-size:.85rem; color:var(--muted)}
+@media (max-width:860px){ .remote .body{height:20rem} }
+</style>
+
+
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="Modo">
+    <button class="tab" role="tab" id="tab-local" aria-selected="true" aria-controls="panel-local">Jogo local</button>
+    <button class="tab" role="tab" id="tab-remoto" aria-selected="false" aria-controls="panel-remoto">Servidor × Cliente</button>
+  </div>
+
+  <section class="panel local" id="panel-local" role="tabpanel" aria-labelledby="tab-local">
+    <div id="mount-local"></div>
+  </section>
+
+  <section class="panel remote" id="panel-remoto" role="tabpanel" aria-labelledby="tab-remoto" hidden>
+    <div id="mount-srv"></div>
+    <div class="link card" aria-label="Conexão entre servidor e cliente">
+      <span class="port">TCP · porta 1313</span>
+      <span class="state" id="net-state">sem conexão</span>
+      <div class="track" id="track" aria-hidden="true"></div>
+      <ol class="msglog" id="msglog" aria-live="polite" aria-label="Mensagens trocadas"><li class="empty">Nenhuma jogada enviada ainda.</li></ol>
+    </div>
+    <div id="mount-cli"></div>
+  </section>
+</div>
+
+<script>
+/* ENGINE-START */
+const VAZIO = 0, O = 1, X = 4, EMPATE = 2;
+const novoTab = () => [[0,0,0],[0,0,0],[0,0,0]];
+const simbolo = v => (v === X ? 'X' : v === O ? 'O' : ' ');
+
+function temVencedor(m){
+  for (let i = 0; i < 3; i++){
+    const s = m[i][0] + m[i][1] + m[i][2];
+    if (s === 3) return O;
+    if (s === 12) return X;
+  }
+  for (let i = 0; i < 3; i++){
+    const s = m[0][i] + m[1][i] + m[2][i];
+    if (s === 3) return O;
+    if (s === 12) return X;
+  }
+  let s = m[0][0] + m[1][1] + m[2][2];
+  if (s === 3) return O;
+  if (s === 12) return X;
+  s = m[0][2] + m[1][1] + m[2][0];
+  if (s === 3) return O;
+  if (s === 12) return X;
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (m[i][j] === VAZIO) return 0;
+  return EMPATE;
+}
+
+/* mesma ordem de varredura do jogadorIA.c: linha i e coluna i, para i = 0..2; depois as diagonais */
+const LINHAS = (() => {
+  const l = [];
+  for (let i = 0; i < 3; i++){ l.push([[i,0],[i,1],[i,2]]); l.push([[0,i],[1,i],[2,i]]); }
+  l.push([[0,0],[1,1],[2,2]]);
+  l.push([[0,2],[1,1],[2,0]]);
+  return l;
+})();
+
+function completaDupla(m, alvo, quem){
+  for (const ln of LINHAS){
+    const v = ln.map(([r,c]) => m[r][c]);
+    if (v.filter(x => x === alvo).length === 2 && v.filter(x => x === VAZIO).length === 1){
+      const [r,c] = ln[v.indexOf(VAZIO)];
+      m[r][c] = quem;
+      return [r,c];
+    }
+  }
+  return null;
+}
+function r1(m, ia, hum){
+  let c = completaDupla(m, ia, ia);
+  if (c) return {regra:1, texto:'completou a própria sequência', celula:c};
+  c = completaDupla(m, hum, ia);
+  if (c) return {regra:1, texto:'bloqueou a sequência do oponente', celula:c};
+  return null;
+}
+function r2(m, ia){
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++){
+    if (m[i][j] !== VAZIO) continue;
+    let n = 0;
+    if (m[i][0] + m[i][1] + m[i][2] === ia) n++;
+    if (m[0][j] + m[1][j] + m[2][j] === ia) n++;
+    if (i === j && m[0][0] + m[1][1] + m[2][2] === ia) n++;
+    if (i + j === 2 && m[0][2] + m[1][1] + m[2][0] === ia) n++;
+    if (n >= 2){ m[i][j] = ia; return {regra:2, texto:'criou duas sequências de duas peças ao mesmo tempo', celula:[i,j]}; }
+  }
+  return null;
+}
+function r3(m, ia){
+  if (m[1][1] === VAZIO){ m[1][1] = ia; return {regra:3, texto:'ocupou o centro', celula:[1,1]}; }
+  return null;
+}
+const CANTOS = [[0,0],[0,2],[2,2],[2,0]];
+function r4(m, ia, hum){
+  for (const [r,c] of CANTOS){
+    const or = r === 0 ? 2 : 0, oc = c === 0 ? 2 : 0;
+    if (m[r][c] === hum && m[or][oc] === VAZIO){ m[or][oc] = ia; return {regra:4, texto:'marcou o canto oposto ao do oponente', celula:[or,oc]}; }
+  }
+  return null;
+}
+function r5(m, ia){
+  for (const [r,c] of CANTOS){
+    if (m[r][c] === VAZIO){ m[r][c] = ia; return {regra:5, texto:'marcou um canto vazio', celula:[r,c]}; }
+  }
+  return null;
+}
+function r6(m, ia){
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++){
+    if (m[i][j] === VAZIO){ m[i][j] = ia; return {regra:6, texto:'marcou a primeira casa vazia', celula:[i,j]}; }
+  }
+  return null;
+}
+function jogaIA(m, ia){
+  const hum = ia === O ? X : O;
+  return r1(m, ia, hum) || r2(m, ia) || r3(m, ia) || r4(m, ia, hum) || r5(m, ia) || r6(m, ia);
+}
+/* ENGINE-END */
+
+/* ---------- terminal ---------- */
+const ABORT = Symbol('abort');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PROMPT = 'PS C:\\jogo-da-vea\\entrega> ';
+const PORTA = 1313;
+const ENVIO_MS = reduceMotion ? 150 : 700;
+
+class Term {
+  constructor(host, title){
+    this.host = host;
+    host.innerHTML =
+      '<div class="term">' +
+        '<div class="bar"><span class="dots"><i></i><i></i><i></i></span>' +
+        '<span class="bar-title"></span><span class="status" hidden></span>' +
+        '<button class="ghost" type="button">Reiniciar</button></div>' +
+        '<div class="body" role="log" aria-label="Terminal"><pre class="out"></pre>' +
+        '<div class="line"><span class="prompt"></span>' +
+        '<input class="in" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Entrada do terminal" readonly></div></div>' +
+      '</div>';
+    this.body = host.querySelector('.body');
+    this.out = host.querySelector('.out');
+    this.promptEl = host.querySelector('.prompt');
+    this.input = host.querySelector('.in');
+    this.statusEl = host.querySelector('.status');
+    host.querySelector('.bar-title').textContent = title;
+    this.resetBtn = host.querySelector('.ghost');
+    this.pending = null;
+    this.session = 0;
+    this.progAbort = null;
+    this.body.addEventListener('mousedown', e => {
+      if (e.target === this.input || window.getSelection().toString()) return;
+      setTimeout(() => { if (!window.getSelection().toString()) this.input.focus({preventScroll:true}); }, 0);
+    });
+    this.input.addEventListener('keydown', e => {
+      if (e.key === 'Enter'){ e.preventDefault(); this.submit(); }
+      else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c' && !window.getSelection().toString()){
+        e.preventDefault();
+        if (this.progAbort){
+          const p = this.pending;
+          if (p){ this.pending = null; this.out.append(p.prompt + this.input.value + '^C\n'); this.promptEl.textContent = ''; this.input.value = ''; this.input.readOnly = true; }
+          else this.out.append('^C\n');
+          this.scroll();
+          this._rejProg && this._rejProg(ABORT);
+        } else if (this.pending){
+          this.out.append(this.pending.prompt + this.input.value + '^C\n');
+          this.input.value = ''; this.scroll();
+        }
+      }
+    });
+  }
+  scroll(){ this.body.scrollTop = this.body.scrollHeight; }
+  print(t){ this.out.append(t); this.scroll(); }
+  clear(){ this.out.textContent = ''; }
+  setStatus(text, kind){
+    this.statusEl.hidden = !text;
+    this.statusEl.textContent = text || '';
+    this.statusEl.className = 'status' + (kind ? ' ' + kind : '');
+  }
+  newSession(){
+    if (this._rejSess) this._rejSess(ABORT);
+    this.sessAbort = new Promise((_, rej) => { this._rejSess = rej; });
+    this.sessAbort.catch(() => {});
+    this.progAbort = null; this._rejProg = null;
+    this.pending = null;
+    this.promptEl.textContent = ''; this.input.value = ''; this.input.readOnly = true;
+    this.setStatus('');
+    return ++this.session;
+  }
+  beginProgram(){
+    this.progAbort = new Promise((_, rej) => { this._rejProg = rej; });
+    this.progAbort.catch(() => {});
+  }
+  endProgram(){ this.progAbort = null; this._rejProg = null; }
+  wait(p){
+    const arr = [p, this.sessAbort];
+    if (this.progAbort) arr.push(this.progAbort);
+    return Promise.race(arr);
+  }
+  read(prompt, shell){
+    const p = { prompt, shell: !!shell };
+    const promise = new Promise(res => {
+      p.res = res;
+      this.pending = p;
+      this.promptEl.textContent = prompt;
+      this.input.value = '';
+      this.input.readOnly = false;
+      if (this.visible()) this.input.focus({preventScroll:true});
+      this.scroll();
+    });
+    return this.wait(promise).finally(() => {
+      if (this.pending === p){ this.pending = null; this.promptEl.textContent = ''; this.input.readOnly = true; }
+    });
+  }
+  visible(){ return this.host.offsetParent !== null; }
+  submit(){
+    const p = this.pending;
+    if (!p) return;
+    this.pending = null;
+    const v = this.input.value;
+    this.input.value = ''; this.promptEl.textContent = ''; this.input.readOnly = true;
+    this.out.append(p.prompt + v + '\n');
+    this.scroll();
+    p.res(v);
+  }
+  async inject(cmd){
+    const p = this.pending;
+    if (!p || !p.shell) return false;
+    const id = this.session;
+    this.input.readOnly = true; this.input.value = '';
+    for (const ch of cmd){
+      await sleep(reduceMotion ? 0 : 26);
+      if (id !== this.session || this.pending !== p) return false;
+      this.input.value += ch;
+    }
+    await sleep(reduceMotion ? 0 : 140);
+    if (id !== this.session || this.pending !== p) return false;
+    this.submit();
+    return true;
+  }
+}
+
+/* desenha(): limpa a tela e imprime o tabuleiro, como tabuleiro.c */
+function textoTabuleiro(m){
+  let s = '  0   1   2\n';
+  for (let i = 0; i < 3; i++){
+    s += i;
+    for (let j = 0; j < 3; j++){ s += ' ' + simbolo(m[i][j]) + ' '; if (j < 2) s += '|'; }
+    s += '\n';
+    if (i < 2) s += ' -----------\n';
+  }
+  return s;
+}
+function desenha(t, m){ t.clear(); t.print(textoTabuleiro(m)); }
+
+async function lerInt(t, prompt){
+  const v = await t.read(prompt);
+  const m = /^\s*([+-]?\d+)/.exec(v);
+  return m ? parseInt(m[1], 10) : NaN;
+}
+
+/* joga() do jogadorTeclado.c */
+async function joga(t, m, tipo){
+  t.print('\n Turno do Jogador ' + simbolo(tipo) + '. \n');
+  t.setStatus('sua vez', 'go');
+  for (;;){
+    const linha = await lerInt(t, 'Digite a linha da jogada (0, 1 ou 2): ');
+    const coluna = await lerInt(t, 'Digite a coluna da jogada (0, 1 ou 2): ');
+    const dentro = linha >= 0 && linha <= 2 && coluna >= 0 && coluna <= 2;
+    if (dentro && m[linha][coluna] === VAZIO){
+      m[linha][coluna] = tipo;
+      t.setStatus('');
+      return { linha, coluna };
+    }
+    if (!dentro) t.print('Jogada invalida! A jogada desejada esta em uma posicao fora do tabuleiro.\n');
+    else t.print('Jogada invalida! A jogada desejada esta em uma posicao ocupada.\n');
+  }
+}
+
+function resultado(t, v){
+  if (v === O) t.print('Jogador O venceu!\n');
+  else if (v === X) t.print('Jogador X venceu!\n');
+  else t.print('Empate!\n');
+}
+
+/* ---------- programas ---------- */
+const programs = {
+  /* main.c + partida.c */
+  async jogo(t, ctx){
+    ctx.iaNota(null);
+    t.print('1 - Humano vs Humano\n2 - Humano vs IA\n3 - Jogo Remoto\nEscolha o modo de jogo:\n');
+    let modo = await lerInt(t, '');
+    while (modo !== 1 && modo !== 2 && modo !== 3){
+      modo = await lerInt(t, 'Escolha invalida (selecione 1 para Humano vs Humano, 2 para Humano vs IA ou 3 para Jogo Remoto): ');
+    }
+    if (modo === 3){
+      t.print('Para jogar remotamente, execute servidor.exe em um computador e cliente.exe no outro\n');
+      return;
+    }
+    let tipo1 = await lerInt(t, 'Escolha o tipo do jogador 1 (1 representa O e 4 representa X): ');
+    while (tipo1 !== O && tipo1 !== X){
+      tipo1 = await lerInt(t, 'Escolha invalida (selecione 1 para O e 4 para X): ');
+    }
+    const tipo2 = tipo1 === O ? X : O;
+    if (modo === 1) t.print('Jogador Humano 1 configurado como ' + simbolo(tipo1) + ' e Jogador Humano 2 configurado como ' + simbolo(tipo2) + '\n');
+    else t.print('Jogador Humano configurado como ' + simbolo(tipo1) + ' e Jogador IA configurado como ' + simbolo(tipo2) + '\n');
+    await t.wait(sleep(reduceMotion ? 0 : 500));
+
+    const m = novoTab();
+    desenha(t, m);
+    let venc = 0, vez = 0;
+    while (venc === 0){
+      if (vez % 2 === 0) await joga(t, m, tipo1);
+      else if (modo === 1) await joga(t, m, tipo2);
+      else {
+        t.print('\n Turno do Jogador ' + simbolo(tipo2) + '. \n');
+        t.setStatus('a IA está jogando', 'wait');
+        await t.wait(sleep(reduceMotion ? 0 : 550));
+        const info = jogaIA(m, tipo2);
+        t.setStatus('');
+        ctx.iaNota(info);
+      }
+      desenha(t, m);
+      venc = temVencedor(m);
+      vez++;
+    }
+    resultado(t, venc);
+  },
+
+  /* mainServidor.c + jogadorRemoto.c (aceita) */
+  async servidor(t, ctx){
+    const net = ctx.net;
+    if (net.bound){ t.print('Erro no bind: No error\n'); return; }
+    let conn = null;
+    net.bound = true; ctx.netUI();
+    try {
+      t.print('Servidor aguardando conexao na porta ' + PORTA + '...\n');
+      t.setStatus('aguardando cliente', 'wait');
+      conn = await t.wait(new Promise(res => { net.accept = res; }));
+      net.accept = null; net.bound = false; net.conn = conn;
+      ctx.logLimpa(); ctx.netUI();
+      t.setStatus('');
+      t.print('Cliente conectado!\n');
+      await partidaRemota(t, ctx, 'servidor', conn);
+    } finally {
+      net.accept = null; net.bound = false;
+      if (conn){ conn.close(); if (net.conn === conn) net.conn = null; }
+      t.setStatus('');
+      ctx.netUI();
+    }
+  },
+
+  /* mainCliente.c + jogadorRemoto.c (conecta) */
+  async cliente(t, ctx){
+    const net = ctx.net;
+    const ip = (await t.read('IP do servidor: ')).trim();
+    const partes = ip.split('.');
+    const valido = partes.length === 4 && partes.every(p => /^\d{1,3}$/.test(p) && +p <= 255);
+    if (!valido){ t.print('Endereco invalido: No error\n'); return; }
+    t.setStatus('conectando', 'wait');
+    await t.wait(sleep(reduceMotion ? 0 : 450));
+    t.setStatus('');
+    if (ip !== '127.0.0.1' || !net.accept){ t.print('Erro ao conectar: No error\n'); return; }
+    const conn = new Conn();
+    try {
+      net.accept(conn);
+      net.conn = conn;
+      t.print('Conectado ao servidor!\n');
+      await partidaRemota(t, ctx, 'cliente', conn);
+    } finally {
+      conn.close();
+      if (net.conn === conn) net.conn = null;
+      t.setStatus('');
+      ctx.netUI();
+    }
+  }
+};
+
+/* laço de mainServidor.c / mainCliente.c */
+async function partidaRemota(t, ctx, papel, conn){
+  const souServidor = papel === 'servidor';
+  const meu = souServidor ? X : O;
+  const dele = souServidor ? O : X;
+  const m = novoTab();
+  desenha(t, m);
+  let venc = 0, vez = 0;
+  while (venc === 0){
+    if ((vez % 2 === 0) === souServidor){
+      const j = await joga(t, m, meu);
+      ctx.envia(papel, conn, '' + j.linha + j.coluna);
+    } else {
+      t.setStatus('aguardando a jogada do oponente', 'wait');
+      const msg = await t.wait((souServidor ? conn.toServer : conn.toClient).recv());
+      t.setStatus('');
+      if (msg === null){ t.print('Adversario desconectou.\n'); return; }
+      m[+msg[0]][+msg[1]] = dele;
+    }
+    desenha(t, m);
+    venc = temVencedor(m);
+    vez++;
+  }
+  resultado(t, venc);
+}
+
+/* canal com entrega atrasada: dados enviados chegam antes do fechamento, como no TCP */
+class Chan {
+  constructor(){ this.q = []; this.w = null; this.emVoo = 0; this.fechando = false; this.fechado = false; }
+  send(msg, ms){
+    this.emVoo++;
+    setTimeout(() => {
+      this.emVoo--;
+      if (this.w){ const r = this.w; this.w = null; r(msg); } else this.q.push(msg);
+      if (this.fechando && this.emVoo === 0) this._fecha();
+    }, ms);
+  }
+  recv(){
+    return new Promise(r => {
+      if (this.q.length) r(this.q.shift());
+      else if (this.fechado) r(null);
+      else this.w = r;
+    });
+  }
+  close(){ this.fechando = true; if (this.emVoo === 0) this._fecha(); }
+  _fecha(){ this.fechado = true; if (this.w){ const r = this.w; this.w = null; r(null); } }
+}
+class Conn {
+  constructor(){ this.toServer = new Chan(); this.toClient = new Chan(); }
+  close(){ this.toServer.close(); this.toClient.close(); }
+}
+
+/* ---------- página ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const net = { bound: false, accept: null, conn: null };
+
+const ctx = {
+  net,
+  iaNota(){},
+  netUI(){
+    const el = $('#net-state');
+    if (net.conn){ el.textContent = 'conectado'; el.className = 'state on'; }
+    else if (net.bound){ el.textContent = 'servidor aguardando'; el.className = 'state wait'; }
+    else { el.textContent = 'sem conexão'; el.className = 'state'; }
+  },
+  logLimpa(){ $('#msglog').innerHTML = '<li class="empty">Nenhuma jogada enviada ainda.</li>'; },
+  envia(papel, conn, texto){
+    const s2c = papel === 'servidor';
+    (s2c ? conn.toClient : conn.toServer).send(texto, ENVIO_MS);
+    const log = $('#msglog');
+    const vazio = log.querySelector('.empty'); if (vazio) vazio.remove();
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="dir">' + (s2c ? 'servidor → cliente' : 'cliente → servidor') + '</span>' +
+      '<code>"' + texto + '"</code><span class="dir">linha ' + texto[0] + ', coluna ' + texto[1] + '</span>';
+    log.prepend(li);
+    while (log.children.length > 6) log.lastElementChild.remove();
+    if (!reduceMotion){
+      const p = document.createElement('span');
+      p.className = 'pkt ' + (s2c ? 's2c' : 'c2s');
+      p.textContent = texto;
+      p.addEventListener('animationend', () => p.remove());
+      $('#track').append(p);
+    }
+  },
+  afterProgram(){ ctx.netUI(); }
+};
+
+async function shell(t, id, autorun, dica){
+  t.print('Windows PowerShell (simulação)\n' + dica + '\n\n');
+  if (autorun){
+    (async () => { await sleep(reduceMotion ? 0 : autorun.delay); if (id === t.session) t.inject(autorun.cmd); })();
+  }
+  for (;;){
+    let line;
+    try { line = await t.read(PROMPT, true); } catch (e){ return; }
+    if (id !== t.session) return;
+    const cmd = line.trim();
+    if (!cmd) continue;
+    const nome = cmd.toLowerCase().replace(/^\.[\\/]/, '').replace(/\.exe$/, '');
+    if (programs[nome]){
+      t.beginProgram();
+      try { await programs[nome](t, ctx); }
+      catch (e){ if (e !== ABORT) throw e; if (id !== t.session) return; }
+      finally { t.endProgram(); t.setStatus(''); ctx.afterProgram(); }
+      if (id !== t.session) return;
+      t.print('\n');
+    } else if (nome === 'cls' || nome === 'clear'){
+      t.clear();
+    } else if (nome === 'help'){
+      t.print('Comandos desta simulação:\n' +
+        '  jogo.exe       jogo local (humano x humano ou humano x IA)\n' +
+        '  servidor.exe   servidor do jogo remoto (joga primeiro, como X)\n' +
+        '  cliente.exe    cliente do jogo remoto (joga em segundo, como O)\n' +
+        '  cls            limpa a tela\n' +
+        '  help           mostra esta ajuda\n' +
+        'Ctrl+C interrompe o programa em execução.\n\n');
+    } else {
+      t.print("'" + cmd.split(/\s+/)[0] + "' não é reconhecido como um comando interno ou externo,\num programa operável ou um arquivo em lotes.\n\n");
+    }
+  }
+}
+
+const terms = {
+  local: new Term($('#mount-local'), 'Windows PowerShell · jogo local'),
+  srv: new Term($('#mount-srv'), 'Windows PowerShell · servidor'),
+  cli: new Term($('#mount-cli'), 'Windows PowerShell · cliente')
+};
+const autoruns = {
+  local: { cmd: '.\\jogo.exe', delay: 450 },
+  srv: null,
+  cli: null
+};
+const dicas = {
+  local: 'Digite help para ver os comandos.',
+  srv: 'Digite servidor.exe e pressione Enter para iniciar o servidor.',
+  cli: 'Com o servidor aberto no outro terminal, digite cliente.exe e pressione Enter.'
+};
+
+function boot(key){
+  const t = terms[key];
+  const id = t.newSession();
+  t.clear();
+  shell(t, id, autoruns[key], dicas[key]);
+}
+for (const k of Object.keys(terms)){
+  terms[k].resetBtn.addEventListener('click', () => {
+    boot(k);
+    if (k !== 'local'){ net.accept = null; net.bound = false; net.conn = null; ctx.netUI(); }
+  });
+}
+boot('local');
+/* abas */
+let remotoIniciado = false;
+function mostra(qual){
+  const local = qual === 'local';
+  if (!local && !remotoIniciado){ remotoIniciado = true; boot('srv'); boot('cli'); }
+  $('#panel-local').hidden = !local;
+  $('#panel-remoto').hidden = local;
+  $('#tab-local').setAttribute('aria-selected', local);
+  $('#tab-remoto').setAttribute('aria-selected', !local);
+  const alvo = local ? terms.local : terms.srv;
+  setTimeout(() => { if (alvo.pending) alvo.input.focus({preventScroll:true}); }, 0);
+}
+$('#tab-local').addEventListener('click', () => mostra('local'));
+$('#tab-remoto').addEventListener('click', () => mostra('remoto'));
+</script>
+
+</body>
+</html>

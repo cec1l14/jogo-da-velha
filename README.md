@@ -69,7 +69,7 @@ gcc *.c -o jogo.exe
 
 **Como compilar (Módulo 3)**
 
-1. Em cada terminal devem ser rodados:
+1. Em cada terminal, devem ser rodados:
 
 ```bash
 gcc mainServidor.c jogadorRemoto.c jogadorTeclado.c tabuleiro.c -o servidor.exe -lws2_32

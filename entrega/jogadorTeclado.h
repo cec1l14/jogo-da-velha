@@ -4,6 +4,8 @@
 
 typedef struct{
     int tipo;
+    int ultimaLinha;
+    int ultimaColuna;
 } JogadorTeclado;
 
 void joga(JogadorTeclado *jogador, Tabuleiro *tab);
