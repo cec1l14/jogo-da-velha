@@ -12,10 +12,10 @@
 #include "jogadorRemoto.h"
 
 //  tenta conectar o cliente ao servidor
-void jogaRemoto(Tabuleiro *tab, JogadorRemoto *remoto){
 
-}
-void conecta(JogadorRemoto *remoto, const char *ip) {
+void conecta(JogadorRemoto *remoto, const char *ip, int porta) {
+    WSADATA wsa;
+    WSAStartup(MAKEWORD(2, 2), &wsa);
 
     remoto->sock = socket(AF_INET, SOCK_STREAM, 0);
     if (remoto->sock == INVALID_SOCKET) {
@@ -27,7 +27,8 @@ void conecta(JogadorRemoto *remoto, const char *ip) {
     servidor.sin_family = AF_INET;
     servidor.sin_port = htons(PORTA);
 
-    if (inet_pton(AF_INET, ip, &servidor.sin_addr) <= 0) {
+    servidor.sin_addr.s_addr = inet_addr(ip);
+    if (servidor.sin_addr.s_addr == INADDR_NONE) {
         perror("Endereco invalido");
         closesocket(remoto->sock);
         exit(EXIT_FAILURE);
@@ -43,7 +44,10 @@ void conecta(JogadorRemoto *remoto, const char *ip) {
 }
 
 // servidor espera o cliente chegar p aceitar 
-void aceita(JogadorRemoto *remoto) {
+
+void aceita(JogadorRemoto *remoto, int porta) {
+    WSADATA wsa;
+    WSAStartup(MAKEWORD(2, 2), &wsa);
     
     struct sockaddr_in endereco;
     int endereco_len = sizeof(endereco);
@@ -84,9 +88,23 @@ void aceita(JogadorRemoto *remoto) {
 void enviaJogada(JogadorRemoto *remoto, int linha, int coluna){
     char buffer[TAM_BUFFER];
 
-    buffer[0] = linha + '0';
+    buffer[0] = linha + '0'; // única linha que não está presente no código fornecido. ela converte as linhas e colunas para a tabela ascii 
     buffer[1] = coluna + '0';
     buffer[2] = '\0';
 
     send(remoto->sock, buffer, strlen(buffer) + 1, 0);
+}
+
+void jogaRemoto(Tabuleiro *tab, JogadorRemoto *remoto){
+    char buffer[TAM_BUFFER];
+
+    memset(buffer, 0, TAM_BUFFER);
+    int bytes = recv(remoto->sock, buffer, TAM_BUFFER - 1, 0);   
+
+    if (bytes <= 0) {                                       
+        printf("Adversario desconectou.\n");
+        exit(EXIT_FAILURE);                                 
+    }
+
+    marcaJogada(tab, buffer[0] - '0', buffer[1] - '0', remoto->tipo); 
 }
