@@ -2,8 +2,13 @@
  * Implementação do módulo: mainServidor
  * Autores: Cecília Candeia e Matheus Fernandes
  * Data de Criação: 31/10/2026
- * Última alteração: xx/10/2026
- * Descrição Geral:
+ * Última alteração: 01/11/2026
+ * Descrição Geral: programa do jogador servidor na partida remota. Espera a
+ *   conexão do cliente com aceita(), joga com o símbolo X e faz a primeira
+ *   jogada. Os turnos se alternam: na sua vez, joga() lê a linha e a coluna
+ *   do teclado e envia a jogada ao cliente; na vez do adversário, jogaRemoto()
+ *   fica esperando a jogada chegar. O laço termina quando alguém vence ou o
+ *   tabuleiro enche, e o resultado é exibido.
  ****/
 
 #include <stdio.h>

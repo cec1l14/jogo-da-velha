@@ -2,8 +2,13 @@
  * Implementação do módulo: mainCliente
  * Autores: Cecília Candeia e Matheus Fernandes
  * Data de Criação: 31/10/2026
- * Última alteração: xx/10/2026
- * Descrição Geral: xxxx
+ * Última alteração: 01/11/2026
+ * Descrição Geral: programa do jogador cliente na partida remota. Pede o IP
+ *   do servidor, conecta com conecta() e joga com o símbolo O, em segundo
+ *   lugar. Os turnos se alternam: na vez do servidor, jogaRemoto() fica
+ *   esperando a jogada chegar; na sua vez, joga() lê a linha e a coluna do
+ *   teclado e envia a jogada ao servidor. O laço termina quando alguém vence
+ *   ou o tabuleiro enche, e o resultado é exibido.
  ****/
 
 #include <stdio.h>

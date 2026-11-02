@@ -2,8 +2,16 @@
  * Implementação do módulo: jogadorRemoto
  * Autores: Cecília Candeia e Matheus Fernandes
  * Data de Criação: 27/10/2026
- * Última alteração: xx/10/2026
- * Descrição Geral: xxxxxx
+ * Última alteração: 01/11/2026
+ * Descrição Geral: jogador que joga em outro processo, na mesma máquina ou em
+ *   outro computador da rede, comunicando-se por sockets TCP (modelo
+ *   cliente-servidor, usando a biblioteca Winsock do Windows). A estrutura
+ *   JogadorRemoto guarda o símbolo do adversário (tipo) e o socket da conexão
+ *   (sock). aceita() é usada pelo servidor: abre a porta PORTA e espera o
+ *   cliente chegar. conecta() é usada pelo cliente: conecta ao IP informado.
+ *   enviaJogada() manda a jogada (linha e coluna) ao outro processo, e
+ *   jogaRemoto() fica bloqueada esperando a jogada do adversário chegar e a
+ *   marca no tabuleiro. Se a conexão cair, o programa avisa e é encerrado.
  ****/
 
 #include <stdio.h>
