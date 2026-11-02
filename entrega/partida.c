@@ -65,7 +65,7 @@ void configuraJogadores(int *modo, JogadorTeclado *humano1, JogadorTeclado *huma
     printf("Jogador Humano configurado como %c e Jogador IA configurado como %c\n", conversao(tipo1), conversao(tipo2));
 
 } else if(*modo == MODO_REMOTO){
-    printf("Para jogar remotamente, execute servidor.exe em um computador e cliente.exe no outro\n");
+    printf("Para jogar remotamente, execute servidor.exe em um computador e cliente.exe em outro\n");
     return;
 }
 }

@@ -463,7 +463,7 @@ const programs = {
       modo = await lerInt(t, 'Escolha invalida (selecione 1 para Humano vs Humano, 2 para Humano vs IA ou 3 para Jogo Remoto): ');
     }
     if (modo === 3){
-      t.print('Para jogar remotamente, execute servidor.exe em um computador e cliente.exe no outro\n');
+      t.print('Para jogar remotamente, execute servidor.exe em um computador e cliente.exe em outro\n');
       return;
     }
     let tipo1 = await lerInt(t, 'Escolha o tipo do jogador 1 (1 representa O e 4 representa X): ');

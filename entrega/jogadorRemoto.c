@@ -19,6 +19,20 @@
 #include <string.h>
 #include "jogadorRemoto.h"
 
+void jogaRemoto(Tabuleiro *tab, JogadorRemoto *remoto){
+    char buffer[TAM_BUFFER];
+
+    memset(buffer, 0, TAM_BUFFER);
+    int bytes = recv(remoto->sock, buffer, TAM_BUFFER - 1, 0);   
+
+    if (bytes <= 0) {                                       
+        printf("Adversario desconectou.\n");
+        exit(EXIT_FAILURE);                                 
+    }
+
+    marcaJogada(tab, buffer[0] - '0', buffer[1] - '0', remoto->tipo); 
+}
+
 //  tenta conectar o cliente ao servidor
 
 void conecta(JogadorRemoto *remoto, const char *ip) {
@@ -101,18 +115,4 @@ void enviaJogada(JogadorRemoto *remoto, int linha, int coluna){
     buffer[2] = '\0';
 
     send(remoto->sock, buffer, strlen(buffer) + 1, 0);
-}
-
-void jogaRemoto(Tabuleiro *tab, JogadorRemoto *remoto){
-    char buffer[TAM_BUFFER];
-
-    memset(buffer, 0, TAM_BUFFER);
-    int bytes = recv(remoto->sock, buffer, TAM_BUFFER - 1, 0);   
-
-    if (bytes <= 0) {                                       
-        printf("Adversario desconectou.\n");
-        exit(EXIT_FAILURE);                                 
-    }
-
-    marcaJogada(tab, buffer[0] - '0', buffer[1] - '0', remoto->tipo); 
 }
