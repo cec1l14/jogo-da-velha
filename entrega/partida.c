@@ -78,9 +78,9 @@ void inicia(Tabuleiro *tab, int modo, JogadorTeclado *humano1, JogadorTeclado *h
 
     while(vencedor == 0){
         if(vez % 2 == 0){
-            joga(humano1, tab);
+            joga(humano1, tab, NULL);
         } else if(modo == MODO_HUMANO_VS_HUMANO){
-            joga(humano2, tab);
+            joga(humano2, tab, NULL);
         } else {
             printf("\n Turno do Jogador %c. \n", conversao(ia->tipo));
             jogaIA(tab, ia);

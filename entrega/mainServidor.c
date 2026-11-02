@@ -28,8 +28,7 @@ int main(){
 
     while(vencedor == 0){
         if(vez % 2 == 0){
-            joga(&humano, &tab);
-            enviaJogada(&remoto, humano.ultimaLinha, humano.ultimaColuna);
+            joga(&humano, &tab, &remoto);
         } else {
             printf("Aguardando resposta do jogador O\n");
             jogaRemoto(&tab, &remoto);

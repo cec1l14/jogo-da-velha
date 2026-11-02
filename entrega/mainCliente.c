@@ -35,8 +35,7 @@ int main(){
             printf("Agurdando resposta do jogador X\n");
             jogaRemoto(&tab, &remoto);
         } else {  
-            joga(&humano, &tab);
-            enviaJogada(&remoto, humano.ultimaLinha, humano.ultimaColuna);
+            joga(&humano, &tab, &remoto);
         }
         desenha(&tab);
         vencedor = temVencedor(&tab);

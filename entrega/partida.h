@@ -1,7 +1,7 @@
 #ifndef PARTIDA_H
 #define PARTIDA_H
-#include "tabuleiro.h"
 #include "jogadorTeclado.h"
+#include "tabuleiro.h"
 #include "jogadorIA.h"
 
 #define MODO_HUMANO_VS_HUMANO 1

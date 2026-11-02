@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "jogadorTeclado.h"
 
-void joga(JogadorTeclado *jogador, Tabuleiro *tab){
+void joga(JogadorTeclado *jogador, Tabuleiro *tab, JogadorRemoto *remoto){
     
     printf("\n Turno do Jogador %c. \n", conversao(jogador->tipo));
     
@@ -29,8 +29,9 @@ void joga(JogadorTeclado *jogador, Tabuleiro *tab){
         
         if (linha >= 0 && linha < 3 && coluna >= 0 && coluna < 3 && tab->M[linha][coluna] == VAZIO) {
             marcaJogada(tab, linha, coluna, jogador->tipo);
-            jogador->ultimaLinha = linha;
-            jogador->ultimaColuna = coluna;
+            if(remoto != NULL){
+                enviaJogada(remoto, linha, coluna);
+            }
             jogadaValida = 1;
         } else if(linha < 0 || linha > 2 || coluna < 0 || coluna > 2){
             printf("Jogada invalida! A jogada desejada esta em uma posicao fora do tabuleiro.\n");

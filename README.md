@@ -69,7 +69,7 @@ cd jogo-da-velha/entrega
 ```
 
 ```bash
-gcc jogadorTeclado.c jogadorIA.c main.c partida.c tabuleiro.c -o jogo.exe
+gcc jogadorTeclado.c jogadorIA.c main.c partida.c tabuleiro.c jogadorRemoto.c -o jogo.exe -lws2_32
 ```
 
 ```bash
