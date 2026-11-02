@@ -32,7 +32,7 @@ int main(){
     
     while(vencedor == 0){
         if(vez % 2 == 0){          
-            printf("Agurdando resposta do jogador X\n");
+            printf("Aguardando resposta do jogador X\n");
             jogaRemoto(&tab, &remoto);
         } else {  
             joga(&humano, &tab, &remoto);

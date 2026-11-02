@@ -217,9 +217,73 @@ function r6(m, ia){
   }
   return null;
 }
+
+/* regra extra (nao consta no enunciado): bloqueia a jogada que criaria duas sequencias de duas marcacoes para o oponente */
+function regraExtra(m, ia, adv){
+  const forks = [];
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++){
+    if (m[i][j] !== VAZIO) continue;
+    let n = 0;
+    if (m[i][0] + m[i][1] + m[i][2] === adv) n++;
+    if (m[0][j] + m[1][j] + m[2][j] === adv) n++;
+    if (i === j && m[0][0] + m[1][1] + m[2][2] === adv) n++;
+    if (i + j === 2 && m[0][2] + m[1][1] + m[2][0] === adv) n++;
+    if (n > 1) forks.push([i, j]);
+  }
+  if (forks.length === 1){
+    const [r, c] = forks[0];
+    m[r][c] = ia;
+    return {regra:7, texto:'bloqueou o garfo do oponente', celula:[r,c]};
+  }
+  if (forks.length > 1){
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++){
+      if (m[i][j] !== VAZIO) continue;
+      const cv = Array.from({length:8}, () => [-100, -100]);
+      m[i][j] = ia;
+      let duplas = 0;
+      if (m[i][0] + m[i][1] + m[i][2] === ia * 2){
+        duplas++;
+        if (m[i][0] === VAZIO) cv[i] = [i, 0];
+        if (m[i][1] === VAZIO) cv[i] = [i, 1];
+        if (m[i][2] === VAZIO) cv[i] = [i, 2];
+      }
+      if (m[0][j] + m[1][j] + m[2][j] === ia * 2){
+        duplas++;
+        if (m[0][j] === VAZIO) cv[j + 3] = [0, j];
+        if (m[1][j] === VAZIO) cv[j + 3] = [1, j];
+        if (m[2][j] === VAZIO) cv[j + 3] = [2, j];
+      }
+      if (m[0][0] + m[1][1] + m[2][2] === ia * 2){
+        duplas++;
+        if (m[0][0] === VAZIO) cv[6] = [0, 0];
+        if (m[1][1] === VAZIO) cv[6] = [1, 1];
+        if (m[2][2] === VAZIO) cv[6] = [2, 2];
+      }
+      if (m[0][2] + m[1][1] + m[2][0] === ia * 2){
+        duplas++;
+        if (m[0][2] === VAZIO) cv[7] = [0, 2];
+        if (m[1][1] === VAZIO) cv[7] = [1, 1];
+        if (m[2][0] === VAZIO) cv[7] = [2, 0];
+      }
+      m[i][j] = VAZIO;
+      if (duplas === 0) continue;
+      let conflito = false;
+      for (const [r, c] of cv){
+        if (r === -100 && c === -100) continue;
+        for (const [fr, fc] of forks) if (fr === r && fc === c) conflito = true;
+      }
+      if (!conflito){
+        m[i][j] = ia;
+        return {regra:7, texto:'atacou para forçar a defesa do oponente', celula:[i,j]};
+      }
+    }
+  }
+  return null;
+}
+
 function jogaIA(m, ia){
   const hum = ia === O ? X : O;
-  return r1(m, ia, hum) || r2(m, ia) || r3(m, ia) || r4(m, ia, hum) || r5(m, ia) || r6(m, ia);
+  return r1(m, ia, hum) || regraExtra(m, ia, hum) || r2(m, ia) || r3(m, ia) || r4(m, ia, hum) || r5(m, ia) || r6(m, ia);
 }
 /* ENGINE-END */
 
@@ -227,7 +291,7 @@ function jogaIA(m, ia){
 const ABORT = Symbol('abort');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-const PROMPT = 'PS C:\\jogo-da-vea\\entrega> ';
+const PROMPT = 'PS C:\\jogo-da-velha\\entrega> ';
 const PORTA = 1313;
 const ENVIO_MS = reduceMotion ? 150 : 700;
 
@@ -494,6 +558,7 @@ async function partidaRemota(t, ctx, papel, conn){
       const j = await joga(t, m, meu);
       ctx.envia(papel, conn, '' + j.linha + j.coluna);
     } else {
+      t.print('Aguardando resposta do jogador ' + simbolo(dele) + '\n');
       t.setStatus('aguardando a jogada do oponente', 'wait');
       const msg = await t.wait((souServidor ? conn.toServer : conn.toClient).recv());
       t.setStatus('');
